@@ -4,7 +4,7 @@ interface Props {
     children: React.ReactNode;
 }
 
-export function Layout(props: Props) {
+export default function Layout(props: Props) {
     const { children } = props;
 
     return (

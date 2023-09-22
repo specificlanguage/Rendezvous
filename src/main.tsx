@@ -11,8 +11,9 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import { SignupPage } from "./pages/SignupPage.tsx";
-import { Layout } from "./layouts/Layout.tsx";
+import Layout from "./layouts/Layout.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
+import AuthProvider from "./layouts/AuthProvider.tsx";
 
 const theme = extendTheme({
     styles: {
@@ -44,7 +45,15 @@ const router = createBrowserRouter(
                 </Layout>
             }
         >
-            <Route path="/" element={<App />} />
+            <Route
+                element={
+                    <AuthProvider>
+                        <Outlet />
+                    </AuthProvider>
+                }
+            >
+                <Route path="/" element={<App />} />
+            </Route>
             <Route path="/signup" element={<SignupPage />} />
         </Route>,
     ),
