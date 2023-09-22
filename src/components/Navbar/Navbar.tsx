@@ -15,6 +15,7 @@ import {
     Stack,
     useColorMode,
     Center,
+    Link,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
@@ -85,7 +86,7 @@ export default function Navbar() {
     return (
         <>
             <Box
-                bg={useColorModeValue("gray.200", "gray.700")}
+                bg={useColorModeValue("gray.100", "gray.900")}
                 px={4}
                 m={8}
                 rounded={"2xl"}
@@ -95,7 +96,15 @@ export default function Navbar() {
                     alignItems={"center"}
                     justifyContent={"space-between"}
                 >
-                    <Box className="font-bold text-2xl">Rendezvous</Box>
+                    <Box className="font-bold text-2xl">
+                        <Link
+                            href="/"
+                            textDecoration={"no-underline"}
+                            _hover={{ textDecoration: "no-underline" }}
+                        >
+                            Rendezvous
+                        </Link>
+                    </Box>
 
                     <Flex alignItems={"center"}>
                         <Stack direction={"row"} spacing={7}>
