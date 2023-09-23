@@ -5,6 +5,8 @@ import "./index.scss";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import {
     createBrowserRouter,
+    createHashRouter,
+    createMemoryRouter,
     createRoutesFromElements,
     Outlet,
     Route,
@@ -33,11 +35,6 @@ const router = createBrowserRouter(
             element={
                 <Layout>
                     <Outlet />
-                </Layout>
-            }
-            errorElement={
-                <Layout>
-                    <ErrorPage />
                 </Layout>
             }
         >

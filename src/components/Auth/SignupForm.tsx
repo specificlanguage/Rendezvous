@@ -9,13 +9,13 @@ import {
     VStack,
 } from "@chakra-ui/react";
 import { Field, Formik, FormikValues } from "formik";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import * as Yup from "yup";
-import { FirebaseApp } from "../../lib/firebase.ts";
+import { FIREBASE_AUTH } from "../../lib/firebase.ts";
 import { useNavigate } from "react-router-dom";
 
 export default function SignupForm() {
-    const auth = getAuth(FirebaseApp);
+    const auth = FIREBASE_AUTH;
     const navigate = useNavigate();
     const passwordErrorMessage =
         "Password must be at least 6 characters, and contain a number and special character.";

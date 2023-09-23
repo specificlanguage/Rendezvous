@@ -21,29 +21,6 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-interface NavProps {
-    children: React.ReactNode;
-}
-
-function NavLink(props: NavProps) {
-    const { children } = props;
-
-    return (
-        <Box
-            as="a"
-            px={2}
-            py={1}
-            rounded={"md"}
-            _hover={{
-                textDecoration: "none",
-                bg: useColorModeValue("gray.200", "gray.700"),
-            }}
-        >
-            {children}
-        </Box>
-    );
-}
-
 function UsernameButton() {
     const navigate = useNavigate();
 
@@ -80,9 +57,7 @@ function UsernameButton() {
                 <br />
                 <MenuDivider />
                 <MenuItem>Account Settings</MenuItem>
-                <MenuItem>
-                    <button onClick={signOutUser}>Log Out</button>
-                </MenuItem>
+                <MenuItem onClick={signOutUser}>Log Out</MenuItem>
             </MenuList>
         </Menu>
     );
@@ -127,11 +102,9 @@ export default function Navbar() {
                             {isLoggedIn ? (
                                 <UsernameButton />
                             ) : (
-                                <NavLink>
-                                    <Link marginTop={"1"} href="/login">
-                                        Log In/Sign Up
-                                    </Link>
-                                </NavLink>
+                                <Link marginTop={"1"} href="/login">
+                                    Log In/Sign Up
+                                </Link>
                             )}
                         </Stack>
                     </Flex>

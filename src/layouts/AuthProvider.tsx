@@ -1,7 +1,8 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { FirebaseApp } from "../lib/firebase.ts";
-import { redirect } from "react-router-dom";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import { FIREBASE_AUTH } from "../lib/firebase.ts";
+import { Spinner } from "@chakra-ui/react";
+import { Navigate } from "react-router-dom";
+import { User } from "firebase/auth";
 
 interface Props {
     children: ReactNode;
@@ -9,13 +10,23 @@ interface Props {
 
 export default function AuthProvider(props: Props) {
     const { children } = props;
-    const auth = getAuth(FirebaseApp);
+    const [user, setUser] = useState<User | null | undefined>(undefined);
 
-    onAuthStateChanged(auth, (user) => {
-        if (!user) {
-            return redirect("/signup");
-        }
-    });
+    useEffect(() => {
+        FIREBASE_AUTH.onAuthStateChanged((user) => {
+            setUser(user);
+        });
+    }, []);
 
-    return <>{children}</>;
+    if (user === undefined) {
+        return (
+            <div className="mx-auto">
+                <Spinner size="xl" />
+            </div>
+        );
+    } else if (user) {
+        return <>{children}</>;
+    } else {
+        return <Navigate to="/" />;
+    }
 }
