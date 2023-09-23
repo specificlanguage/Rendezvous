@@ -19,6 +19,7 @@ import {
 import { FIREBASE_AUTH } from "../../lib/firebase.ts";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface NavProps {
     children: React.ReactNode;
@@ -44,9 +45,16 @@ function NavLink(props: NavProps) {
 }
 
 function UsernameButton() {
+    const navigate = useNavigate();
+
     async function signOutUser() {
         await signOut(FIREBASE_AUTH);
+        // TODO Later: Create redux state variable so we don't store this in localStorage.
+        localStorage.setItem("name", "");
+        navigate("/login");
     }
+
+    const name = localStorage.getItem("name") ?? "";
 
     return (
         <Menu>
@@ -57,24 +65,17 @@ function UsernameButton() {
                 cursor={"pointer"}
                 minW={0}
             >
-                <Avatar
-                    size={"sm"}
-                    src={"https://avatars.dicebear.com/api/male/username.svg"}
-                />
+                {/* TODO LATER: Allow custom images to be used for avatars. */}
+                <Avatar size={"md"} name={name} />
             </MenuButton>
             <MenuList alignItems={"center"}>
                 <br />
                 <Center>
-                    <Avatar
-                        size={"2xl"}
-                        src={
-                            "https://avatars.dicebear.com/api/male/username.svg"
-                        }
-                    />
+                    <Avatar size={"2xl"} name={name} />
                 </Center>
                 <br />
                 <Center>
-                    <p>Username</p>
+                    <p>{name}</p>
                 </Center>
                 <br />
                 <MenuDivider />
@@ -93,6 +94,8 @@ export default function Navbar() {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
         if (user) {
             setLoggedIn(true);
+        } else {
+            setLoggedIn(false);
         }
     });
 

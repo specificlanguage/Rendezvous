@@ -29,6 +29,7 @@ export default function LoginForm() {
     async function login(props: LoginProps) {
         const { email, password } = props;
         await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
+        // TODO: Get Name from DB
         navigate("/");
     }
 

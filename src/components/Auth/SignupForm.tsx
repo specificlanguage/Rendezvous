@@ -3,6 +3,7 @@ import {
     Button,
     FormControl,
     FormErrorMessage,
+    FormHelperText,
     FormLabel,
     Input,
     VStack,
@@ -11,19 +12,23 @@ import { Field, Formik, FormikValues } from "formik";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import * as Yup from "yup";
 import { FirebaseApp } from "../../lib/firebase.ts";
+import { useNavigate } from "react-router-dom";
 
 export default function SignupForm() {
     const auth = getAuth(FirebaseApp);
+    const navigate = useNavigate();
     const passwordErrorMessage =
         "Password must be at least 6 characters, and contain a number and special character.";
 
     interface SignupProps extends FormikValues {
+        name: string;
         email: string;
         password: string;
         verifyPassword: string;
     }
 
     const SignupSchema = Yup.object().shape({
+        name: Yup.string().required("Required"),
         email: Yup.string().email("Invalid email").required("Required"),
         password: Yup.string()
             .min(6, passwordErrorMessage)
@@ -40,13 +45,15 @@ export default function SignupForm() {
     });
 
     async function signup(props: SignupProps) {
-        const { email, password } = props;
+        const { name, email, password } = props;
         console.log(`submitting ${email} as new user`);
         await createUserWithEmailAndPassword(auth, email, password)
             .then((cred) => console.log(cred))
             .catch((error) => {
                 console.log(error.message);
             });
+        localStorage.setItem("name", name);
+        navigate("/");
     }
 
     return (
@@ -60,6 +67,7 @@ export default function SignupForm() {
         >
             <Formik
                 initialValues={{
+                    name: "",
                     email: "",
                     password: "",
                     verifyPassword: "",
@@ -72,6 +80,30 @@ export default function SignupForm() {
                 {({ handleSubmit, errors, touched, isSubmitting }) => (
                     <form onSubmit={handleSubmit}>
                         <VStack spacing={4} align="flex-start">
+                            {/* NAME */}
+                            <FormControl
+                                isInvalid={!!errors.name && touched.name}
+                            >
+                                <FormLabel htmlFor="name">Name</FormLabel>
+                                <Field
+                                    as={Input}
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    variant="filled"
+                                />
+                                {!errors.name ? (
+                                    <FormHelperText>
+                                        This is what others will see.
+                                    </FormHelperText>
+                                ) : (
+                                    <FormErrorMessage>
+                                        {errors.name}
+                                    </FormErrorMessage>
+                                )}
+                            </FormControl>
+
+                            {/* EMAIL */}
                             <FormControl
                                 isInvalid={!!errors.email && touched.email}
                             >
@@ -85,10 +117,18 @@ export default function SignupForm() {
                                     type="email"
                                     variant="filled"
                                 />
-                                <FormErrorMessage>
-                                    {errors.email}
-                                </FormErrorMessage>
+                                {!errors.email ? (
+                                    <FormHelperText>
+                                        You'll use this to log in.
+                                    </FormHelperText>
+                                ) : (
+                                    <FormErrorMessage>
+                                        {errors.email}
+                                    </FormErrorMessage>
+                                )}
                             </FormControl>
+
+                            {/* PASSWORD */}
                             <FormControl
                                 isInvalid={
                                     !!errors.password && touched.password
@@ -108,6 +148,8 @@ export default function SignupForm() {
                                     {errors.password}
                                 </FormErrorMessage>
                             </FormControl>
+
+                            {/* VERIFY PASSWORD (confirm) */}
                             <FormControl
                                 isInvalid={
                                     !!errors.verifyPassword &&
