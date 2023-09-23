@@ -17,7 +17,7 @@ export default function SignupForm() {
     const passwordErrorMessage =
         "Password must be at least 6 characters, and contain a number and special character.";
 
-    interface LoginProps extends FormikValues {
+    interface SignupProps extends FormikValues {
         email: string;
         password: string;
         verifyPassword: string;
@@ -39,7 +39,7 @@ export default function SignupForm() {
         // .required('Required')
     });
 
-    async function signup(props: LoginProps) {
+    async function signup(props: SignupProps) {
         const { email, password } = props;
         console.log(`submitting ${email} as new user`);
         await createUserWithEmailAndPassword(auth, email, password)

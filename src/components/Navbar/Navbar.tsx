@@ -13,36 +13,41 @@ import {
     // useDisclosure,
     useColorModeValue,
     Stack,
-    useColorMode,
     Center,
     Link,
 } from "@chakra-ui/react";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { FIREBASE_AUTH } from "../../lib/firebase.ts";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useState } from "react";
 
-// interface Props {
-//     children: React.ReactNode
-// }
+interface NavProps {
+    children: React.ReactNode;
+}
 
-// const NavLink = (props: Props) => {
-//     const { children } = props
-//
-//     return (
-//         <Box
-//             as="a"
-//             px={2}
-//             py={1}
-//             rounded={'md'}
-//             _hover={{
-//                 textDecoration: 'none',
-//                 bg: useColorModeValue('gray.200', 'gray.700'),
-//             }}
-//             href={'#'}>
-//             {children}
-//         </Box>
-//     )
-// }
+function NavLink(props: NavProps) {
+    const { children } = props;
+
+    return (
+        <Box
+            as="a"
+            px={2}
+            py={1}
+            rounded={"md"}
+            _hover={{
+                textDecoration: "none",
+                bg: useColorModeValue("gray.200", "gray.700"),
+            }}
+        >
+            {children}
+        </Box>
+    );
+}
 
 function UsernameButton() {
+    async function signOutUser() {
+        await signOut(FIREBASE_AUTH);
+    }
+
     return (
         <Menu>
             <MenuButton
@@ -74,15 +79,23 @@ function UsernameButton() {
                 <br />
                 <MenuDivider />
                 <MenuItem>Account Settings</MenuItem>
-                <MenuItem>Logout</MenuItem>
+                <MenuItem>
+                    <button onClick={signOutUser}>Log Out</button>
+                </MenuItem>
             </MenuList>
         </Menu>
     );
 }
 
 export default function Navbar() {
-    const { colorMode, toggleColorMode } = useColorMode();
-    // const { isOpen, onOpen, onClose } = useDisclosure()
+    const [isLoggedIn, setLoggedIn] = useState(false);
+
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+        if (user) {
+            setLoggedIn(true);
+        }
+    });
+
     return (
         <>
             <Box
@@ -107,16 +120,16 @@ export default function Navbar() {
                     </Box>
 
                     <Flex alignItems={"center"}>
-                        <Stack direction={"row"} spacing={7}>
-                            <Button onClick={toggleColorMode}>
-                                {colorMode === "light" ? (
-                                    <MoonIcon />
-                                ) : (
-                                    <SunIcon />
-                                )}
-                            </Button>
-
-                            <UsernameButton />
+                        <Stack direction={"row"} spacing={4}>
+                            {isLoggedIn ? (
+                                <UsernameButton />
+                            ) : (
+                                <NavLink>
+                                    <Link marginTop={"1"} href="/login">
+                                        Log In/Sign Up
+                                    </Link>
+                                </NavLink>
+                            )}
                         </Stack>
                     </Flex>
                 </Flex>

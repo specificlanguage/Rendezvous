@@ -10,22 +10,18 @@ import {
     Route,
     RouterProvider,
 } from "react-router-dom";
-import { SignupPage } from "./pages/SignupPage.tsx";
 import Layout from "./layouts/Layout.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
 import AuthProvider from "./layouts/AuthProvider.tsx";
 
 const theme = extendTheme({
     styles: {
         global: {
-            body: {
-                bgGradient: "linear(to-b, #FFF, #C38D01)",
+            html: {
+                bg: "neutral-100",
                 color: "neutral-900",
-                h: "calc(100vh)",
-                _dark: {
-                    color: "neutral-200",
-                    bgGradient: "linear(to-br, #323638, #162B60)",
-                },
+                minH: "calc(100vh)",
             },
         },
     },
@@ -54,7 +50,7 @@ const router = createBrowserRouter(
             >
                 <Route path="/" element={<App />} />
             </Route>
-            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/login" element={<LoginPage />} />
         </Route>,
     ),
 );
