@@ -5,15 +5,12 @@ import "./index.scss";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import {
     createBrowserRouter,
-    createHashRouter,
-    createMemoryRouter,
     createRoutesFromElements,
     Outlet,
     Route,
     RouterProvider,
 } from "react-router-dom";
 import Layout from "./layouts/Layout.tsx";
-import ErrorPage from "./pages/ErrorPage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import AuthProvider from "./layouts/AuthProvider.tsx";
 
