@@ -62,7 +62,7 @@ export default function SignupForm() {
             rounded={"2xl"}
             bg={"blue-500"}
             p={6}
-            w={"2xl"}
+            maxW={"2xl"}
             mx={"auto"}
         >
             <Formik
@@ -91,6 +91,7 @@ export default function SignupForm() {
                                     name="name"
                                     type="text"
                                     variant="filled"
+                                    w={"full"}
                                 />
                                 {!errors.name ? (
                                     <FormHelperText>

@@ -39,7 +39,7 @@ export default function LoginForm() {
             rounded={"2xl"}
             bg={"blue-500"}
             p={6}
-            w={"2xl"}
+            maxW={"2xl"}
             mx={"auto"}
         >
             <Formik

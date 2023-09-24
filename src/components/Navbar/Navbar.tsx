@@ -76,12 +76,7 @@ export default function Navbar() {
 
     return (
         <>
-            <Box
-                bg={useColorModeValue("gray.100", "gray.900")}
-                px={4}
-                m={8}
-                rounded={"2xl"}
-            >
+            <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
                 <Flex
                     h={16}
                     alignItems={"center"}

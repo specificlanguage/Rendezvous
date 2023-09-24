@@ -9,10 +9,12 @@ export default function Layout(props: Props) {
 
     return (
         <div>
-            <header>
+            <header className="w-screen">
                 <Navbar />
             </header>
-            <main className="max-w-3xl mx-auto">{children}</main>
+            <main className="md:max-w-3xl lg:mx-auto mx-8 mt-8">
+                {children}
+            </main>
         </div>
     );
 }
