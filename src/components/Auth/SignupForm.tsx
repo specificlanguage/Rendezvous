@@ -91,11 +91,10 @@ export default function SignupForm() {
                                     name="name"
                                     type="text"
                                     variant="filled"
-                                    w={"full"}
                                 />
                                 {!errors.name ? (
                                     <FormHelperText>
-                                        This is what others will see.
+                                        This is what other people will see.
                                     </FormHelperText>
                                 ) : (
                                     <FormErrorMessage>

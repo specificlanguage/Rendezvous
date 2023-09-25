@@ -139,3 +139,28 @@ ul li a:visited {
         opacity: 1;
     }
 }
+
+@keyframes fadeOut {
+    0% {
+        display: block;
+        opacity: 1;
+    }
+
+    1% {
+        display: block;
+        opacity: 1;
+    }
+
+    100% {
+        display: block;
+        opacity: 0;
+    }
+}
+
+.fadeIn {
+    animation: 0.5s fadeIn forwards;
+}
+
+.fadeOut {
+    animation: 0.5s fadeOut forwards;
+}

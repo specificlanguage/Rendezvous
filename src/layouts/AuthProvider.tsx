@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { FIREBASE_AUTH } from "../lib/firebase.ts";
-import { Spinner } from "@chakra-ui/react";
+import { AbsoluteCenter, Box, Spinner } from "@chakra-ui/react";
 import { Navigate } from "react-router-dom";
 import { User } from "firebase/auth";
 
@@ -20,13 +20,20 @@ export default function AuthProvider(props: Props) {
 
     if (user === undefined) {
         return (
-            <div className="mx-auto">
-                <Spinner size="xl" />
-            </div>
+            <Box position="relative" h="calc(100vh - 16rem)">
+                <AbsoluteCenter>
+                    <Spinner
+                        size="xl"
+                        thickness="8px"
+                        emptyColor="gray.200"
+                        color="blue.500"
+                    />
+                </AbsoluteCenter>
+            </Box>
         );
-    } else if (user) {
+    } else if (user != null) {
         return <>{children}</>;
     } else {
-        return <Navigate to="/" />;
+        return <Navigate to="/login" />;
     }
 }
