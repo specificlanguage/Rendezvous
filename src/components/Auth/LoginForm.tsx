@@ -1,6 +1,7 @@
 import { Field, Formik, FormikValues } from "formik";
 import {
-    Box,
+    Alert,
+    AlertIcon,
     Button,
     FormControl,
     FormErrorMessage,
@@ -13,9 +14,11 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../lib/firebase.ts";
 import { useNavigate } from "react-router-dom";
 import { fetcher } from "../../lib/fetch.ts";
+import { useState } from "react";
 
 export default function LoginForm() {
     const navigate = useNavigate();
+    const [signupError, setError] = useState(false);
 
     interface LoginProps extends FormikValues {
         email: string;
@@ -29,7 +32,21 @@ export default function LoginForm() {
 
     async function login(props: LoginProps) {
         const { email, password } = props;
-        await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
+        let isError = false;
+        setError(false);
+
+        await signInWithEmailAndPassword(FIREBASE_AUTH, email, password).catch(
+            (error) => {
+                console.log(error);
+                isError = true;
+            },
+        );
+
+        if (isError) {
+            setError(true);
+            return;
+        }
+
         await fetcher("/user/get", {}).then((resp) => {
             localStorage.setItem("name", resp.body.name);
         });
@@ -37,14 +54,14 @@ export default function LoginForm() {
     }
 
     return (
-        <Box
-            border={1}
-            rounded={"2xl"}
-            bg={"blue-500"}
-            p={6}
-            maxW={"2xl"}
-            mx={"auto"}
-        >
+        <>
+            {signupError && (
+                <Alert status="error" fontSize={"sm"} mb={4} rounded={"2xl"}>
+                    <AlertIcon /> Something went wrong. Check your email and
+                    password.
+                </Alert>
+            )}
+
             <Formik
                 initialValues={{
                     email: "",
@@ -97,7 +114,7 @@ export default function LoginForm() {
                             </FormControl>
                             <Button
                                 type="submit"
-                                colorScheme="purple"
+                                colorScheme="blue"
                                 isLoading={isSubmitting}
                             >
                                 Log in
@@ -106,6 +123,6 @@ export default function LoginForm() {
                     </form>
                 )}
             </Formik>
-        </Box>
+        </>
     );
 }

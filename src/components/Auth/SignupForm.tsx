@@ -1,5 +1,6 @@
 import {
-    Box,
+    Alert,
+    AlertIcon,
     Button,
     FormControl,
     FormErrorMessage,
@@ -14,10 +15,12 @@ import * as Yup from "yup";
 import { FIREBASE_AUTH } from "../../lib/firebase.ts";
 import { useNavigate } from "react-router-dom";
 import { fetcher } from "../../lib/fetch.ts";
+import { useState } from "react";
 
 export default function SignupForm() {
     const auth = FIREBASE_AUTH;
     const navigate = useNavigate();
+    const [signupError, setError] = useState(false);
     const passwordErrorMessage =
         "Password must be at least 6 characters, and contain a number and special character.";
 
@@ -47,15 +50,22 @@ export default function SignupForm() {
 
     async function signup(props: SignupProps) {
         const { name, email, password } = props;
-        console.log(`submitting ${email} as new user`);
+
+        setError(false);
+        let isError = false;
 
         // Create username
         await createUserWithEmailAndPassword(auth, email, password).catch(
             (error) => {
-                // TODO: send info saying that something went wrong
-                console.log(error.message);
+                console.log(error);
+                isError = true;
             },
         );
+
+        if (isError) {
+            setError(isError);
+            return;
+        }
 
         // Signup on backend
         await fetcher("/user/signup", {
@@ -66,20 +76,19 @@ export default function SignupForm() {
         // Get user info
         await fetcher("/user/get", {}).then((resp) => {
             localStorage.setItem("name", resp.body.name);
+            navigate("/");
         });
-
-        navigate("/");
     }
 
     return (
-        <Box
-            border={1}
-            rounded={"2xl"}
-            bg={"blue-500"}
-            p={6}
-            maxW={"2xl"}
-            mx={"auto"}
-        >
+        <>
+            {signupError && (
+                <Alert status="error" fontSize={"sm"} mb={4} rounded={"2xl"}>
+                    <AlertIcon /> Something went wrong. You may already have an
+                    account. Try logging in?
+                </Alert>
+            )}
+
             <Formik
                 initialValues={{
                     name: "",
@@ -187,7 +196,7 @@ export default function SignupForm() {
                             </FormControl>
                             <Button
                                 type="submit"
-                                colorScheme="purple"
+                                colorScheme="blue"
                                 isLoading={isSubmitting}
                             >
                                 Sign Up
@@ -196,6 +205,6 @@ export default function SignupForm() {
                     </form>
                 )}
             </Formik>
-        </Box>
+        </>
     );
 }
