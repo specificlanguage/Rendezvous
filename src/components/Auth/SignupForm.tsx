@@ -13,6 +13,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import * as Yup from "yup";
 import { FIREBASE_AUTH } from "../../lib/firebase.ts";
 import { useNavigate } from "react-router-dom";
+import { fetcher } from "../../lib/fetch.ts";
 
 export default function SignupForm() {
     const auth = FIREBASE_AUTH;
@@ -47,12 +48,16 @@ export default function SignupForm() {
     async function signup(props: SignupProps) {
         const { name, email, password } = props;
         console.log(`submitting ${email} as new user`);
-        await createUserWithEmailAndPassword(auth, email, password)
-            .then((cred) => console.log(cred))
-            .catch((error) => {
+        await createUserWithEmailAndPassword(auth, email, password).catch(
+            (error) => {
+                // TODO: send info saying that something went wrong
                 console.log(error.message);
-            });
-        localStorage.setItem("name", name);
+            },
+        );
+        await fetcher("/user/signup", {
+            method: "POST",
+            body: JSON.stringify({ name: name }),
+        }).then(() => console.log("hello"));
         navigate("/");
     }
 
