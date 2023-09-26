@@ -1,8 +1,9 @@
 import { ReactNode, useEffect, useState } from "react";
 import { FIREBASE_AUTH } from "../lib/firebase.ts";
-import { AbsoluteCenter, Box, Spinner } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { Navigate } from "react-router-dom";
 import { User } from "firebase/auth";
+import LoadingSpinner from "../components/LoadingSpinner.tsx";
 
 interface Props {
     children: ReactNode;
@@ -21,14 +22,7 @@ export default function AuthProvider(props: Props) {
     if (user === undefined) {
         return (
             <Box position="relative" h="calc(100vh - 16rem)">
-                <AbsoluteCenter>
-                    <Spinner
-                        size="xl"
-                        thickness="8px"
-                        emptyColor="gray.200"
-                        color="blue.500"
-                    />
-                </AbsoluteCenter>
+                <LoadingSpinner />
             </Box>
         );
     } else if (user != null) {

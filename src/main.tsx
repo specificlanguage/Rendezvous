@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
 import "./index.scss";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import {
@@ -10,9 +9,12 @@ import {
     Route,
     RouterProvider,
 } from "react-router-dom";
+
 import Layout from "./layouts/Layout.tsx";
-import LoginPage from "./pages/LoginPage.tsx";
 import AuthProvider from "./layouts/AuthProvider.tsx";
+
+import LoginPage from "./pages/LoginPage.tsx";
+import HomePage from "./pages/HomePage.tsx";
 
 const theme = extendTheme({
     styles: {
@@ -42,7 +44,7 @@ const router = createBrowserRouter(
                     </AuthProvider>
                 }
             >
-                <Route path="/" element={<App />} />
+                <Route path="/" element={<HomePage />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />
         </Route>,

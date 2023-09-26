@@ -5,7 +5,6 @@ async function updateOptions(options: RequestInit) {
 
     if (FIREBASE_AUTH.currentUser) {
         await FIREBASE_AUTH.currentUser.getIdToken().then((token) => {
-            console.log(token);
             update.headers = {
                 ...(update.headers ?? {}),
                 Authorization: `Bearer ${token}`,
