@@ -12,6 +12,7 @@ import * as Yup from "yup";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../lib/firebase.ts";
 import { useNavigate } from "react-router-dom";
+import { fetcher } from "../../lib/fetch.ts";
 
 export default function LoginForm() {
     const navigate = useNavigate();
@@ -29,7 +30,9 @@ export default function LoginForm() {
     async function login(props: LoginProps) {
         const { email, password } = props;
         await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
-        // TODO: Get Name from DB
+        await fetcher("/user/get", {}).then((resp) => {
+            localStorage.setItem("name", resp.body.name);
+        });
         navigate("/");
     }
 

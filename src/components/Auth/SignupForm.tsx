@@ -48,16 +48,26 @@ export default function SignupForm() {
     async function signup(props: SignupProps) {
         const { name, email, password } = props;
         console.log(`submitting ${email} as new user`);
+
+        // Create username
         await createUserWithEmailAndPassword(auth, email, password).catch(
             (error) => {
                 // TODO: send info saying that something went wrong
                 console.log(error.message);
             },
         );
+
+        // Signup on backend
         await fetcher("/user/signup", {
             method: "POST",
             body: JSON.stringify({ name: name }),
-        }).then(() => console.log("hello"));
+        });
+
+        // Get user info
+        await fetcher("/user/get", {}).then((resp) => {
+            localStorage.setItem("name", resp.body.name);
+        });
+
         navigate("/");
     }
 

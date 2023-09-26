@@ -32,5 +32,9 @@ export async function fetcher(path: string, options: RequestInit) {
     const backendURL = import.meta.env.VITE_BACKEND_URL ?? "";
     const fetchOptions = await updateOptions(options);
 
-    return fetch(backendURL + path, fetchOptions);
+    const resp = await fetch(backendURL + path, fetchOptions);
+    return {
+        status: resp.status,
+        body: await resp.json(),
+    };
 }
