@@ -1,7 +1,10 @@
 import {
+    AbsoluteCenter,
     Alert,
     AlertIcon,
+    Box,
     Button,
+    Divider,
     FormControl,
     FormErrorMessage,
     FormHelperText,
@@ -16,6 +19,7 @@ import { FIREBASE_AUTH } from "../../lib/firebase.ts";
 import { useNavigate } from "react-router-dom";
 import { fetcher } from "../../lib/fetch.ts";
 import { useState } from "react";
+import AltSignIns from "./AltSignInButton.tsx";
 
 export default function SignupForm() {
     const auth = FIREBASE_AUTH;
@@ -71,10 +75,7 @@ export default function SignupForm() {
         await fetcher("/user/signup", {
             method: "POST",
             body: JSON.stringify({ name: name }),
-        });
-
-        // Get user info
-        await fetcher("/user/get", {}).then((resp) => {
+        }).then((resp) => {
             localStorage.setItem("name", resp.body.name);
             navigate("/");
         });
@@ -116,15 +117,12 @@ export default function SignupForm() {
                                     type="text"
                                     variant="filled"
                                 />
-                                {!errors.name ? (
-                                    <FormHelperText>
-                                        This is what other people will see.
-                                    </FormHelperText>
-                                ) : (
-                                    <FormErrorMessage>
-                                        {errors.name}
-                                    </FormErrorMessage>
-                                )}
+                                <FormHelperText float={"left"}>
+                                    This is what others on your trip will see.
+                                </FormHelperText>
+                                <FormErrorMessage float={"right"}>
+                                    {errors.name}
+                                </FormErrorMessage>
                             </FormControl>
 
                             {/* EMAIL */}
@@ -141,15 +139,12 @@ export default function SignupForm() {
                                     type="email"
                                     variant="filled"
                                 />
-                                {!errors.email ? (
-                                    <FormHelperText>
-                                        You'll use this to log in.
-                                    </FormHelperText>
-                                ) : (
-                                    <FormErrorMessage>
-                                        {errors.email}
-                                    </FormErrorMessage>
-                                )}
+                                <FormHelperText float={"left"}>
+                                    You'll use this to log in.
+                                </FormHelperText>
+                                <FormErrorMessage float={"right"}>
+                                    {errors.email}
+                                </FormErrorMessage>
                             </FormControl>
 
                             {/* PASSWORD */}
@@ -168,7 +163,7 @@ export default function SignupForm() {
                                     type="password"
                                     variant="filled"
                                 />
-                                <FormErrorMessage>
+                                <FormErrorMessage float={"right"}>
                                     {errors.password}
                                 </FormErrorMessage>
                             </FormControl>
@@ -190,7 +185,7 @@ export default function SignupForm() {
                                     type="password"
                                     variant="filled"
                                 />
-                                <FormErrorMessage>
+                                <FormErrorMessage float={"right"}>
                                     {errors.verifyPassword}
                                 </FormErrorMessage>
                             </FormControl>
@@ -205,6 +200,15 @@ export default function SignupForm() {
                     </form>
                 )}
             </Formik>
+
+            <Box position="relative">
+                <Divider />
+                <AbsoluteCenter bg="white" px="4">
+                    or
+                </AbsoluteCenter>
+            </Box>
+
+            <AltSignIns />
         </>
     );
 }

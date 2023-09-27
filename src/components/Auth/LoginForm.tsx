@@ -1,8 +1,11 @@
 import { Field, Formik, FormikValues } from "formik";
 import {
+    AbsoluteCenter,
     Alert,
     AlertIcon,
+    Box,
     Button,
+    Divider,
     FormControl,
     FormErrorMessage,
     FormLabel,
@@ -15,6 +18,7 @@ import { FIREBASE_AUTH } from "../../lib/firebase.ts";
 import { useNavigate } from "react-router-dom";
 import { fetcher } from "../../lib/fetch.ts";
 import { useState } from "react";
+import AltSignIns from "./AltSignInButton.tsx";
 
 export default function LoginForm() {
     const navigate = useNavigate();
@@ -49,8 +53,8 @@ export default function LoginForm() {
 
         await fetcher("/user/get", {}).then((resp) => {
             localStorage.setItem("name", resp.body.name);
+            navigate("/");
         });
-        navigate("/");
     }
 
     return (
@@ -89,7 +93,7 @@ export default function LoginForm() {
                                     type="email"
                                     variant="filled"
                                 />
-                                <FormErrorMessage>
+                                <FormErrorMessage float={"right"}>
                                     {errors.email}
                                 </FormErrorMessage>
                             </FormControl>
@@ -108,7 +112,7 @@ export default function LoginForm() {
                                     type="password"
                                     variant="filled"
                                 />
-                                <FormErrorMessage>
+                                <FormErrorMessage float={"right"}>
                                     {errors.password}
                                 </FormErrorMessage>
                             </FormControl>
@@ -123,6 +127,15 @@ export default function LoginForm() {
                     </form>
                 )}
             </Formik>
+
+            <Box position="relative">
+                <Divider />
+                <AbsoluteCenter bg="white" px="4">
+                    or
+                </AbsoluteCenter>
+            </Box>
+
+            <AltSignIns />
         </>
     );
 }

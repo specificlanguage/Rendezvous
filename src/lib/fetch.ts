@@ -27,9 +27,9 @@ async function updateOptions(options: RequestInit) {
  * @param options - Additional HTTP options
  */
 
-export async function fetcher(path: string, options: RequestInit) {
+export async function fetcher(path: string, options?: RequestInit) {
     const backendURL = import.meta.env.VITE_BACKEND_URL ?? "";
-    const fetchOptions = await updateOptions(options);
+    const fetchOptions = await updateOptions(options ?? {});
 
     const resp = await fetch(backendURL + path, fetchOptions);
     return {
