@@ -1,4 +1,11 @@
-import { AbsoluteCenter, Card, Heading, Icon, Stack } from "@chakra-ui/react";
+import {
+    AbsoluteCenter,
+    Card,
+    Heading,
+    Icon,
+    Link,
+    Stack,
+} from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa6";
 import { TripCardSkeleton } from "./TripViewSkeletons.tsx";
 
@@ -30,7 +37,7 @@ function TripViewCard(props: TripViewCardProps) {
 
 function CreateTripCard() {
     return (
-        <button>
+        <Link href="/create">
             <Card
                 p={6}
                 bg="white"
@@ -44,7 +51,7 @@ function CreateTripCard() {
                     </Heading>
                 </AbsoluteCenter>
             </Card>
-        </button>
+        </Link>
     );
 }
 
