@@ -19,6 +19,7 @@ import {
     useSteps,
 } from "@chakra-ui/react";
 import { FaArrowLeft } from "react-icons/fa6";
+import CreateTripLocationAndDates from "./CreateTripLocationAndDates.tsx";
 
 const steps = [
     {
@@ -74,6 +75,7 @@ export default function CreateTripView() {
                             ))}
                         </Stepper>
                     </CardBody>
+                    <CreateTripLocationAndDates />
                 </Card>
             </Center>
         </Card>
