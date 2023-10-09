@@ -7,36 +7,30 @@ import {
     FormHelperText,
     FormLabel,
     HStack,
+    Icon,
     Input,
     VStack,
 } from "@chakra-ui/react";
+import { queryCreateTrip } from "../../../lib/http/TripQueries.ts";
+import { FaArrowRight } from "react-icons/fa6";
 
-export default function CreateTripLocationAndDates() {
+interface CreateTripDateProps {
+    onSubmit: () => void;
+}
+
+export default function CreateTripNameAndDates(props: CreateTripDateProps) {
+    const { onSubmit } = props;
     const createTripSchema = Yup.object().shape({
         tripName: Yup.string().required("Trip name is required"),
-        startDate: Yup.date().required(),
+        startDate: Yup.date().required("Depart date is required"),
         endDate: Yup.date()
-            .required()
+            .required("End date is required")
             .min(
                 Yup.ref("startDate"),
                 "End date cannot be earlier than start date",
             ),
-        location: Yup.string(),
+        // location: Yup.string(),
     });
-
-    const fakeLocations = [
-        "Paris",
-        "New York",
-        "Hawaii",
-        "Boston",
-        "London",
-        "Tokyo",
-        "Singapore",
-        "Grand Canyon",
-    ];
-
-    const randomLocation =
-        fakeLocations[Math.floor(Math.random() * fakeLocations.length)];
 
     return (
         <Formik
@@ -44,10 +38,17 @@ export default function CreateTripLocationAndDates() {
                 tripName: "",
                 startDate: "",
                 endDate: "",
-                location: "",
+                // location: "",
             }}
             validationSchema={createTripSchema}
-            onSubmit={async (values) => {}}
+            onSubmit={async (values) => {
+                await queryCreateTrip(
+                    values.tripName,
+                    values.startDate,
+                    values.endDate,
+                );
+                onSubmit();
+            }}
         >
             {({ handleSubmit, errors, touched, isSubmitting }) => (
                 <form onSubmit={handleSubmit}>
@@ -101,41 +102,21 @@ export default function CreateTripLocationAndDates() {
                                     id="endDate"
                                     name="endDate"
                                     type="date"
+                                    mb={errors.endDate ? 0 : 6}
                                 />
                                 {errors.endDate ? (
                                     <FormErrorMessage>
                                         {errors.endDate}
                                     </FormErrorMessage>
-                                ) : (
-                                    <div className="mb-6" />
-                                )}
+                                ) : null}
                             </FormControl>
                         </HStack>
-                        {/* LOCATION */}
-                        <FormControl
-                            isInvalid={!!errors.location && touched.location}
-                        >
-                            <FormLabel htmlFor="tripName">
-                                Location (optional)
-                            </FormLabel>
-                            <Field
-                                as={Input}
-                                id="location"
-                                name="location"
-                                type="text"
-                                placeholder={randomLocation}
-                                variant="filled"
-                            />
-                            <FormErrorMessage float={"right"}>
-                                {errors.location}
-                            </FormErrorMessage>
-                        </FormControl>
                         <Button
                             type="submit"
                             colorScheme="blue"
                             isLoading={isSubmitting}
                         >
-                            Create Trip
+                            Next step <Icon as={FaArrowRight} ml={4} />
                         </Button>
                     </VStack>
                 </form>

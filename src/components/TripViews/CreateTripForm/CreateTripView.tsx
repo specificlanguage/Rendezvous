@@ -2,9 +2,7 @@ import {
     Box,
     Button,
     Card,
-    CardBody,
     CardHeader,
-    Center,
     Heading,
     Icon,
     Link,
@@ -19,11 +17,14 @@ import {
     useSteps,
 } from "@chakra-ui/react";
 import { FaArrowLeft } from "react-icons/fa6";
-import CreateTripLocationAndDates from "./CreateTripLocationAndDates.tsx";
+import CreateTripNameAndDates from "./CreateTripNameAndDates.tsx";
 
 const steps = [
     {
-        title: "Location & Dates",
+        title: "Name & Dates",
+    },
+    {
+        title: "Location",
     },
     {
         title: "Invites",
@@ -36,10 +37,29 @@ const steps = [
 // }
 
 export default function CreateTripView() {
-    const { activeStep } = useSteps({
+    const { activeStep, setActiveStep } = useSteps({
         index: 0,
         count: steps.length,
     });
+
+    function formPart() {
+        switch (activeStep) {
+            case 0:
+                return (
+                    <CreateTripNameAndDates onSubmit={() => setActiveStep(1)} />
+                );
+            case 1:
+                return (
+                    <Card>
+                        <CardHeader>
+                            <Heading as="h2" size="xl" float={"left"}>
+                                Oops, unimplemented!
+                            </Heading>
+                        </CardHeader>
+                    </Card>
+                );
+        }
+    }
 
     return (
         <Card p={5} bg={"neutral-200"} _dark={{ bg: "neutral-900" }}>
@@ -49,35 +69,28 @@ export default function CreateTripView() {
                 </Heading>
                 <Link float={"right"} href="/" mt={4}>
                     <Button colorScheme={"gray"}>
-                        <Icon as={FaArrowLeft} mb={1} mr={2} /> Back to Your
-                        Trips
+                        <Icon as={FaArrowLeft} mb={1} mr={2} /> Back to Trips
                     </Button>
                 </Link>
             </CardHeader>
-            <Center>
-                <Card minW={"xl"} maxW={"xl"}>
-                    <CardBody>
-                        <Stepper size="lg" index={activeStep}>
-                            {steps.map((step, index) => (
-                                <Step key={index}>
-                                    <StepIndicator>
-                                        <StepStatus
-                                            complete={<StepIcon />}
-                                            incomplete={<StepNumber />}
-                                            active={<StepNumber />}
-                                        />
-                                    </StepIndicator>
-                                    <Box flexShrink="0">
-                                        <StepTitle>{step.title}</StepTitle>
-                                    </Box>
-                                    <StepSeparator />
-                                </Step>
-                            ))}
-                        </Stepper>
-                    </CardBody>
-                    <CreateTripLocationAndDates />
-                </Card>
-            </Center>
+            <Stepper size="lg" index={activeStep}>
+                {steps.map((step, index) => (
+                    <Step key={index}>
+                        <StepIndicator>
+                            <StepStatus
+                                complete={<StepIcon />}
+                                incomplete={<StepNumber />}
+                                active={<StepNumber />}
+                            />
+                        </StepIndicator>
+                        <Box flexShrink="0">
+                            <StepTitle>{step.title}</StepTitle>
+                        </Box>
+                        <StepSeparator />
+                    </Step>
+                ))}
+            </Stepper>
+            {formPart()}
         </Card>
     );
 }
