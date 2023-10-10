@@ -18,27 +18,23 @@ import {
 } from "@chakra-ui/react";
 import { FaArrowLeft } from "react-icons/fa6";
 import CreateTripNameAndDates from "./CreateTripNameAndDates.tsx";
+import CreateTripLocations from "./CreateTripLocations.tsx";
 
 const steps = [
     {
         title: "Name & Dates",
     },
     {
-        title: "Location",
+        title: "Destinations",
     },
     {
         title: "Invites",
     },
 ];
 
-// function _renderStepContent(step) {
-//     switch (step) {
-//     }
-// }
-
 export default function CreateTripView() {
     const { activeStep, setActiveStep } = useSteps({
-        index: 0,
+        index: 1,
         count: steps.length,
     });
 
@@ -49,6 +45,10 @@ export default function CreateTripView() {
                     <CreateTripNameAndDates onSubmit={() => setActiveStep(1)} />
                 );
             case 1:
+                return (
+                    <CreateTripLocations onSubmit={() => setActiveStep(2)} />
+                );
+            default:
                 return (
                     <Card>
                         <CardHeader>
@@ -73,7 +73,7 @@ export default function CreateTripView() {
                     </Button>
                 </Link>
             </CardHeader>
-            <Stepper size="lg" index={activeStep}>
+            <Stepper size="lg" index={activeStep} mb={4}>
                 {steps.map((step, index) => (
                     <Step key={index}>
                         <StepIndicator>
