@@ -15,7 +15,7 @@ import { queryCreateTrip } from "../../../lib/http/TripQueries.ts";
 import { FaArrowRight } from "react-icons/fa6";
 
 interface CreateTripDateProps {
-    onSubmit: () => void;
+    onSubmit: (name: string, startDate: string, endDate: string) => void;
 }
 
 export default function CreateTripNameAndDates(props: CreateTripDateProps) {
@@ -47,7 +47,7 @@ export default function CreateTripNameAndDates(props: CreateTripDateProps) {
                     values.startDate,
                     values.endDate,
                 );
-                onSubmit();
+                onSubmit(values.tripName, values.startDate, values.endDate);
             }}
         >
             {({ handleSubmit, errors, touched, isSubmitting }) => (
@@ -64,7 +64,7 @@ export default function CreateTripNameAndDates(props: CreateTripDateProps) {
                                 name="tripName"
                                 type="text"
                                 placeholder="My Awesome Trip"
-                                variant="filled"
+                                variant="outline"
                             />
                             {errors.tripName ? (
                                 <FormErrorMessage float={"right"}>

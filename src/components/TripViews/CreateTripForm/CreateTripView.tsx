@@ -3,7 +3,9 @@ import {
     Button,
     Card,
     CardHeader,
+    Container,
     Heading,
+    Stack,
     Icon,
     Link,
     Step,
@@ -16,9 +18,10 @@ import {
     StepTitle,
     useSteps,
 } from "@chakra-ui/react";
-import { FaArrowLeft } from "react-icons/fa6";
+import { FaArrowLeft, FaCalendar, FaLocationDot } from "react-icons/fa6";
 import CreateTripNameAndDates from "./CreateTripNameAndDates.tsx";
-import CreateTripLocations from "./CreateTripLocations.tsx";
+import CreateTripLocations, { LocationInputs } from "./CreateTripLocations.tsx";
+import { useState } from "react";
 
 const steps = [
     {
@@ -33,21 +36,32 @@ const steps = [
 ];
 
 export default function CreateTripView() {
+    const [tripName, setTripName] = useState("");
+    const [dates, setDates] = useState({ startDate: "", endDate: "" });
+    const [locations, setLocations] = useState<LocationInputs[]>([]);
+
     const { activeStep, setActiveStep } = useSteps({
-        index: 1,
+        index: 0,
         count: steps.length,
     });
+
+    function infoStage0(tripName: string, startDate: string, endDate: string) {
+        setTripName(tripName);
+        setDates({ startDate, endDate });
+        setActiveStep(1);
+    }
+
+    function infoStage1(locations: LocationInputs[]) {
+        setLocations(locations);
+        setActiveStep(2);
+    }
 
     function formPart() {
         switch (activeStep) {
             case 0:
-                return (
-                    <CreateTripNameAndDates onSubmit={() => setActiveStep(1)} />
-                );
+                return <CreateTripNameAndDates onSubmit={infoStage0} />;
             case 1:
-                return (
-                    <CreateTripLocations onSubmit={() => setActiveStep(2)} />
-                );
+                return <CreateTripLocations onSubmit={infoStage1} />;
             default:
                 return (
                     <Card>
@@ -90,6 +104,29 @@ export default function CreateTripView() {
                     </Step>
                 ))}
             </Stepper>
+            <Container>
+                <Heading as="h3" size="lg" mb={1}>
+                    {tripName}
+                </Heading>
+                <Stack mb={8} m={2} spacing={2}>
+                    {dates.startDate != "" ? (
+                        <div className="text-neutral-500 text-base">
+                            <Icon as={FaCalendar} w={5} h={5} />{" "}
+                            {dates.startDate} - {dates.endDate}{" "}
+                        </div>
+                    ) : null}
+                    {locations.length > 0 ? (
+                        <div className="text-neutral-500 text-base">
+                            <Icon as={FaLocationDot} />{" "}
+                            {locations.map((location, index) => (
+                                <>
+                                    {(index ? ", " : "") + location.description}
+                                </>
+                            ))}
+                        </div>
+                    ) : null}
+                </Stack>
+            </Container>
             {formPart()}
         </Card>
     );
