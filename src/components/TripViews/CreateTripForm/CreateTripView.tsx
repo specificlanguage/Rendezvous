@@ -20,8 +20,9 @@ import {
 } from "@chakra-ui/react";
 import { FaArrowLeft, FaCalendar, FaLocationDot } from "react-icons/fa6";
 import CreateTripNameAndDates from "./CreateTripNameAndDates.tsx";
-import CreateTripLocations, { LocationInputs } from "./CreateTripLocations.tsx";
+import CreateTripLocations from "./CreateTripLocations.tsx";
 import { useState } from "react";
+import { LocationInputs } from "../../../lib/types.ts";
 
 const steps = [
     {
@@ -36,6 +37,7 @@ const steps = [
 ];
 
 export default function CreateTripView() {
+    const [tripID, setTripID] = useState("");
     const [tripName, setTripName] = useState("");
     const [dates, setDates] = useState({ startDate: "", endDate: "" });
     const [locations, setLocations] = useState<LocationInputs[]>([]);
@@ -45,9 +47,15 @@ export default function CreateTripView() {
         count: steps.length,
     });
 
-    function infoStage0(tripName: string, startDate: string, endDate: string) {
+    function infoStage0(
+        tripName: string,
+        startDate: string,
+        endDate: string,
+        tripID: string,
+    ) {
         setTripName(tripName);
         setDates({ startDate, endDate });
+        setTripID(tripID);
         setActiveStep(1);
     }
 
@@ -61,7 +69,12 @@ export default function CreateTripView() {
             case 0:
                 return <CreateTripNameAndDates onSubmit={infoStage0} />;
             case 1:
-                return <CreateTripLocations onSubmit={infoStage1} />;
+                return (
+                    <CreateTripLocations
+                        onSubmit={infoStage1}
+                        tripID={tripID}
+                    />
+                );
             default:
                 return (
                     <Card>

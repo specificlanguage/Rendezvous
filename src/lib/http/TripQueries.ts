@@ -1,5 +1,6 @@
 import { FormikValues } from "formik";
 import { fetcher } from "../fetch.ts";
+import { LocationInputs } from "../types.ts";
 
 export interface CreateTripRequestProps extends FormikValues {
     tripName: string;
@@ -18,6 +19,17 @@ export function queryCreateTrip(
             tripName: tripName,
             startDate: startDate,
             endDate: endDate,
+        }),
+    });
+}
+
+export function querySetLocations(tripID: string, locations: LocationInputs[]) {
+    console.log(locations);
+    return fetcher("/trip/locations", {
+        method: "POST",
+        body: JSON.stringify({
+            tripID,
+            locations,
         }),
     });
 }

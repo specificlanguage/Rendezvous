@@ -15,14 +15,12 @@ import {
     HStack,
 } from "@chakra-ui/react";
 import { FaArrowRight } from "react-icons/fa6";
+import { LocationInputs } from "../../../lib/types";
+import { querySetLocations } from "../../../lib/http/TripQueries.ts";
 
 interface CreateTripLocationProps {
     onSubmit: (locations: LocationInputs[]) => void;
-}
-
-export interface LocationInputs {
-    description: string;
-    place_id: string;
+    tripID: string;
 }
 
 interface AutocompleteResults {
@@ -30,7 +28,7 @@ interface AutocompleteResults {
 }
 
 export default function CreateTripLocations(props: CreateTripLocationProps) {
-    const { onSubmit } = props;
+    const { onSubmit, tripID } = props;
 
     const [locationInput, setLocationInput] = useState("");
     const [locations, setLocations] = useState<LocationInputs[]>([]);
@@ -46,7 +44,10 @@ export default function CreateTripLocations(props: CreateTripLocationProps) {
 
     function AutocompleteResults(props: AutocompleteResults) {
         function select(input: LocationInputs) {
-            setLocations((prev) => [...prev, input]);
+            setLocations((prev) => [
+                ...prev,
+                { description: input.description, place_id: input.place_id },
+            ]);
             setLocationInput("");
             setSelected(true);
         }
@@ -78,7 +79,7 @@ export default function CreateTripLocations(props: CreateTripLocationProps) {
 
     async function submit() {
         setSubmitting(true);
-        // TODO: submit locations to backend
+        await querySetLocations(tripID, locations);
         onSubmit(locations);
     }
 
@@ -108,7 +109,7 @@ export default function CreateTripLocations(props: CreateTripLocationProps) {
                 {locations.length > 0 ? (
                     <HStack spacing={4}>
                         {locations.map((loc, index) => (
-                            <Tag size="lg">
+                            <Tag size="lg" key={index}>
                                 <TagLabel>{loc.description}</TagLabel>
                                 <TagCloseButton
                                     onClick={() =>

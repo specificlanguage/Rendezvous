@@ -15,7 +15,12 @@ import { queryCreateTrip } from "../../../lib/http/TripQueries.ts";
 import { FaArrowRight } from "react-icons/fa6";
 
 interface CreateTripDateProps {
-    onSubmit: (name: string, startDate: string, endDate: string) => void;
+    onSubmit: (
+        name: string,
+        startDate: string,
+        endDate: string,
+        tripID: string,
+    ) => void;
 }
 
 export default function CreateTripNameAndDates(props: CreateTripDateProps) {
@@ -38,16 +43,20 @@ export default function CreateTripNameAndDates(props: CreateTripDateProps) {
                 tripName: "",
                 startDate: "",
                 endDate: "",
-                // location: "",
             }}
             validationSchema={createTripSchema}
             onSubmit={async (values) => {
-                await queryCreateTrip(
+                const response = await queryCreateTrip(
                     values.tripName,
                     values.startDate,
                     values.endDate,
                 );
-                onSubmit(values.tripName, values.startDate, values.endDate);
+                onSubmit(
+                    values.tripName,
+                    values.startDate,
+                    values.endDate,
+                    response.body.id,
+                );
             }}
         >
             {({ handleSubmit, errors, touched, isSubmitting }) => (
