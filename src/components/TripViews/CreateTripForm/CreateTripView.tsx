@@ -2,6 +2,7 @@ import {
     Box,
     Button,
     Card,
+    CardBody,
     CardHeader,
     Container,
     Heading,
@@ -16,11 +17,13 @@ import {
     StepSeparator,
     StepStatus,
     StepTitle,
+    Text,
     useSteps,
 } from "@chakra-ui/react";
 import { FaArrowLeft, FaCalendar, FaLocationDot } from "react-icons/fa6";
 import CreateTripNameAndDates from "./CreateTripNameAndDates.tsx";
 import CreateTripLocations from "./CreateTripLocations.tsx";
+import CreateTripInvites from "./CreateTripInvites.tsx";
 import { useState } from "react";
 import { LocationInputs } from "../../../lib/types.ts";
 
@@ -70,10 +73,50 @@ export default function CreateTripView() {
                 return <CreateTripNameAndDates onSubmit={infoStage0} />;
             case 1:
                 return (
-                    <CreateTripLocations
-                        onSubmit={infoStage1}
-                        tripID={tripID}
-                    />
+                    <Card>
+                        <CardHeader>
+                            <Heading
+                                as="h4"
+                                fontSize="30px"
+                                color="black"
+                                my={1}
+                            >
+                                Add Destinations
+                            </Heading>
+                            <Text>
+                                Search for destinations for the trip that
+                                *you'd* like to go to, not locations that you
+                                (or others) are departing from.
+                            </Text>
+                        </CardHeader>
+                        <CardBody>
+                            <CreateTripLocations
+                                onSubmit={infoStage1}
+                                tripID={tripID}
+                            />
+                        </CardBody>
+                    </Card>
+                );
+            case 2:
+                return (
+                    <Card>
+                        <CardHeader>
+                            <Heading as="h3" size="xl">
+                                Invite friends
+                            </Heading>
+                            <Text>
+                                A good trip isn't without friends! Invite them
+                                to collaborate and to get info about their trip
+                                with you. (You can always add more later)
+                            </Text>
+                        </CardHeader>
+                        <CardBody>
+                            <CreateTripInvites
+                                onSubmit={() => console.log("hello")}
+                                tripID={tripID}
+                            />
+                        </CardBody>
+                    </Card>
                 );
             default:
                 return (

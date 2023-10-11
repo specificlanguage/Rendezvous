@@ -3,7 +3,6 @@ import { useState } from "react";
 import {
     Button,
     Card,
-    Heading,
     Input,
     Stack,
     Icon,
@@ -11,7 +10,6 @@ import {
     Tag,
     TagLabel,
     TagCloseButton,
-    Text,
     HStack,
 } from "@chakra-ui/react";
 import { FaArrowRight } from "react-icons/fa6";
@@ -86,13 +84,6 @@ export default function CreateTripLocations(props: CreateTripLocationProps) {
     return (
         <Container maxW="lg">
             <Stack>
-                <Heading as="h4" fontSize="30px" color="black" my={1}>
-                    Add Destinations
-                </Heading>
-                <Text my={0} color="black" fontSize="15px">
-                    Search for destinations for the trip that *you'd* like to go
-                    to, not locations that you (or others) are departing from.
-                </Text>
                 <Input
                     type="text"
                     mb={2}
