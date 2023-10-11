@@ -24,7 +24,10 @@ function GoogleLogin() {
 
         await fetcher(`/user/signup`, {
             method: "POST",
-            body: JSON.stringify({ name }),
+            body: JSON.stringify({
+                name,
+                email: FIREBASE_AUTH.currentUser.email,
+            }),
         }).then(async (resp) => {
             if (resp.status == 500) {
                 await fetcher(`/user/`).then((resp) => {

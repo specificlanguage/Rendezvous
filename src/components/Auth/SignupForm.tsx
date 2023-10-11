@@ -74,7 +74,7 @@ export default function SignupForm() {
         // Signup on backend
         await fetcher("/user/signup", {
             method: "POST",
-            body: JSON.stringify({ name: name }),
+            body: JSON.stringify({ name: name, email: email }),
         }).then((resp) => {
             localStorage.setItem("name", resp.body.name);
             navigate("/");
