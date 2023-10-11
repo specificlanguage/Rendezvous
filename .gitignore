@@ -25,3 +25,7 @@ dist-ssr
 
 .env
 .idea
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
