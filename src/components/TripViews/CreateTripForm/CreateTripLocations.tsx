@@ -3,6 +3,7 @@ import { useState } from "react";
 import {
     Button,
     Card,
+    CardBody,
     Input,
     Stack,
     Icon,
@@ -10,7 +11,10 @@ import {
     Tag,
     TagLabel,
     TagCloseButton,
-    HStack,
+    Wrap,
+    WrapItem,
+    Flex,
+    Spacer,
 } from "@chakra-ui/react";
 import { FaArrowRight } from "react-icons/fa6";
 import { LocationInputs } from "../../../lib/types";
@@ -23,6 +27,11 @@ interface CreateTripLocationProps {
 
 interface AutocompleteResults {
     results: LocationInputs[];
+}
+
+interface LocationDisplayProps {
+    loc: LocationInputs;
+    index: number;
 }
 
 export default function CreateTripLocations(props: CreateTripLocationProps) {
@@ -51,17 +60,36 @@ export default function CreateTripLocations(props: CreateTripLocationProps) {
         }
 
         return (
-            <Card p={4}>
-                {props.results.map((res, index) => (
-                    <button
-                        key={index}
-                        className="text-black"
-                        onClick={() => select(res)}
-                    >
-                        {res.description}
-                    </button>
-                ))}
+            <Card p={0}>
+                <CardBody p={2}>
+                    <Stack spacing={0}>
+                        {props.results.map((res, index) => (
+                            <button
+                                key={index}
+                                className="text-black text-left hover:text-blue-900"
+                                onClick={() => select(res)}
+                            >
+                                {res.description}
+                            </button>
+                        ))}
+                    </Stack>
+                </CardBody>
             </Card>
+        );
+    }
+
+    function LocationDisplay(props: LocationDisplayProps) {
+        const { index, loc } = props;
+
+        return (
+            <Tag size="lg" key={index}>
+                <TagLabel>{loc.description}</TagLabel>
+                <TagCloseButton
+                    onClick={() =>
+                        setLocations((loc) => loc.filter((_, i) => i != index))
+                    }
+                />
+            </Tag>
         );
     }
 
@@ -84,43 +112,49 @@ export default function CreateTripLocations(props: CreateTripLocationProps) {
     return (
         <Container maxW="lg">
             <Stack>
-                <Input
-                    type="text"
-                    mb={2}
-                    value={locationInput}
-                    onChange={(event) => {
-                        setLocationInput(event.target.value);
-                    }}
-                />
+                <Flex mb={2}>
+                    <Input
+                        type="text"
+                        w={96}
+                        value={locationInput}
+                        placeholder="Search for locations..."
+                        onChange={(event) => {
+                            setLocationInput(event.target.value);
+                        }}
+                    />
+                    <Spacer />
+                    <Button
+                        type="button"
+                        colorScheme="blue"
+                        disabled={locations.length > 4}
+                        ml={2}
+                        onClick={() => search()}
+                    >
+                        Search
+                    </Button>
+                </Flex>
+
                 {!selectedLocation &&
                 placePredictions.length > 0 &&
                 !isPlacePredictionsLoading ? (
                     <AutocompleteResults results={placePredictions} />
                 ) : null}
                 {locations.length > 0 ? (
-                    <HStack spacing={4}>
+                    <Wrap align="center" spacing="5px">
                         {locations.map((loc, index) => (
-                            <Tag size="lg" key={index}>
-                                <TagLabel>{loc.description}</TagLabel>
-                                <TagCloseButton
-                                    onClick={() =>
-                                        setLocations((loc) =>
-                                            loc.filter((_, i) => i != index),
-                                        )
-                                    }
-                                />
-                            </Tag>
+                            <>
+                                {index > 0 ? (
+                                    <WrapItem>
+                                        <Icon as={FaArrowRight} />
+                                    </WrapItem>
+                                ) : null}
+                                <WrapItem>
+                                    <LocationDisplay loc={loc} index={index} />
+                                </WrapItem>
+                            </>
                         ))}
-                    </HStack>
+                    </Wrap>
                 ) : null}
-                <Button
-                    w="full"
-                    colorScheme="blue"
-                    disabled={locations.length > 4}
-                    onClick={() => search()}
-                >
-                    Search
-                </Button>
                 <Button
                     type="button"
                     colorScheme="blue"

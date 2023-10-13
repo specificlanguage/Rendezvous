@@ -24,12 +24,21 @@ export function queryCreateTrip(
 }
 
 export function querySetLocations(tripID: string, locations: LocationInputs[]) {
-    console.log(locations);
     return fetcher("/trip/locations", {
         method: "POST",
         body: JSON.stringify({
             tripID,
             locations,
+        }),
+    });
+}
+
+export function inviteFriends(tripID: string, emails: string[]) {
+    return fetcher("/trip/invite", {
+        method: "POST",
+        body: JSON.stringify({
+            tripID,
+            emails,
         }),
     });
 }

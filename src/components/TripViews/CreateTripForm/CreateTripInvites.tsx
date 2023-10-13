@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { FaMinus, FaPlus } from "react-icons/fa6";
+import { inviteFriends } from "../../../lib/http/TripQueries.ts";
 
 interface CreateTripInviteProps {
     onSubmit: () => void;
@@ -35,7 +36,9 @@ export default function CreateTripInvites(props: CreateTripInviteProps) {
     const { onSubmit, tripID } = props;
 
     async function submit(values: FormikValues) {
-        // Backend submission TODO
+        if (values.emails.length > 0) {
+            await inviteFriends(tripID, values.emails);
+        }
         onSubmit();
     }
 

@@ -87,6 +87,9 @@ export default function CreateTripView() {
                                 Search for destinations for the trip that
                                 *you'd* like to go to, not locations that you
                                 (or others) are departing from.
+                                <br className="mb-2" />
+                                Enter destinations in order of intended travel.
+                                You can change it later if you need to.
                             </Text>
                         </CardHeader>
                         <CardBody>
