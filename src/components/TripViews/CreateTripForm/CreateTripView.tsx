@@ -8,7 +8,7 @@ import {
     Heading,
     Stack,
     Icon,
-    Link,
+    Link as ChakraLink,
     Step,
     StepIcon,
     StepIndicator,
@@ -20,6 +20,7 @@ import {
     Text,
     useSteps,
 } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import { FaArrowLeft, FaCalendar, FaLocationDot } from "react-icons/fa6";
 import CreateTripNameAndDates from "./CreateTripNameAndDates.tsx";
 import CreateTripLocations from "./CreateTripLocations.tsx";
@@ -140,11 +141,11 @@ export default function CreateTripView() {
                 <Heading as="h2" size="xl" float={"left"}>
                     Create Trip
                 </Heading>
-                <Link float={"right"} href="/" mt={4}>
+                <ChakraLink as={RouterLink} float={"right"} to="/" mt={4}>
                     <Button colorScheme={"gray"}>
                         <Icon as={FaArrowLeft} mb={1} mr={2} /> Back to Trips
                     </Button>
-                </Link>
+                </ChakraLink>
             </CardHeader>
             <Stepper size="lg" index={activeStep} mb={4}>
                 {steps.map((step, index) => (

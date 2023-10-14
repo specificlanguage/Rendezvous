@@ -14,12 +14,12 @@ import {
     useColorModeValue,
     Stack,
     Center,
-    Link,
+    Link as ChakraLink,
 } from "@chakra-ui/react";
 import { FIREBASE_AUTH } from "../../lib/firebase.ts";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 function UsernameButton() {
     const navigate = useNavigate();
@@ -83,13 +83,14 @@ export default function Navbar() {
                     justifyContent={"space-between"}
                 >
                     <Box className="font-bold text-2xl">
-                        <Link
-                            href="/"
+                        <ChakraLink
+                            as={RouterLink}
+                            to="/"
                             textDecoration={"no-underline"}
                             _hover={{ textDecoration: "no-underline" }}
                         >
                             Rendezvous
-                        </Link>
+                        </ChakraLink>
                     </Box>
 
                     <Flex alignItems={"center"}>
@@ -97,9 +98,13 @@ export default function Navbar() {
                             {isLoggedIn ? (
                                 <UsernameButton />
                             ) : (
-                                <Link marginTop={"1"} href="/login">
+                                <ChakraLink
+                                    as={RouterLink}
+                                    marginTop={1}
+                                    to="/login"
+                                >
                                     Log In/Sign Up
-                                </Link>
+                                </ChakraLink>
                             )}
                         </Stack>
                     </Flex>

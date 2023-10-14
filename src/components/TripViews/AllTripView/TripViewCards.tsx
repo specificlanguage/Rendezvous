@@ -6,6 +6,7 @@ import {
     Link as ChakraLink,
     Stack,
 } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import { FaCalendar, FaPlus } from "react-icons/fa6";
 import { format } from "date-fns";
 import { transformDateToTimezone } from "../../../lib/dates.ts";
@@ -27,8 +28,6 @@ interface TripCardsProps {
 function TripViewCard(props: TripViewCardProps) {
     const { id, tripName, startDate, endDate } = props;
 
-    console.log(startDate);
-
     const dateFormat = "MMM d, y";
     const startDateDisplay = format(
         transformDateToTimezone(startDate),
@@ -38,7 +37,8 @@ function TripViewCard(props: TripViewCardProps) {
 
     return (
         <ChakraLink
-            href={`/trip/${id}`}
+            as={RouterLink}
+            to={`/trip/${id}`}
             role="group"
             _hover={{ textDecoration: "none" }}
         >
@@ -62,7 +62,7 @@ function TripViewCard(props: TripViewCardProps) {
 
 function CreateTripCard() {
     return (
-        <ChakraLink href="/create">
+        <ChakraLink as={RouterLink} to="/create">
             <Card
                 p={6}
                 bg="white"
