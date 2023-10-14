@@ -3,28 +3,21 @@ import {
     Card,
     Heading,
     Icon,
-    Link,
+    Link as ChakraLink,
     Stack,
 } from "@chakra-ui/react";
-import { FaPlus } from "react-icons/fa6";
-import { TripCardSkeleton } from "./TripViewSkeletons.tsx";
+import { FaCalendar, FaPlus } from "react-icons/fa6";
+import { format } from "date-fns";
+import { transformDateToTimezone } from "../../../lib/dates.ts";
 
 interface TripViewCardProps {
     id: string;
     tripName: string;
     tripImage: string;
     adminID: string;
-    created: Date;
-
-    // // Store accounts on those that go on the trip
-    // accounts TripAccounts[]
-    //
-    // // Store admin data on who created the trip
-    // admin Account @relation(fields: [adminID], references: [id])
-    // adminID String
-    //
-    // // Store info on when the trip "plan" was created
-    // created DateTime @default(now())
+    created: string;
+    startDate: string;
+    endDate: string;
 }
 
 interface TripCardsProps {
@@ -32,12 +25,44 @@ interface TripCardsProps {
 }
 
 function TripViewCard(props: TripViewCardProps) {
-    return <TripCardSkeleton />;
+    const { id, tripName, startDate, endDate } = props;
+
+    console.log(startDate);
+
+    const dateFormat = "MMM d, y";
+    const startDateDisplay = format(
+        transformDateToTimezone(startDate),
+        dateFormat,
+    );
+    const endDateDisplay = format(transformDateToTimezone(endDate), dateFormat);
+
+    return (
+        <ChakraLink
+            href={`/trip/${id}`}
+            role="group"
+            _hover={{ textDecoration: "none" }}
+        >
+            <Card
+                p={4}
+                bg="white"
+                h="200"
+                _hover={{ bgColor: "#fafafa", shadow: "lg" }}
+            >
+                <Heading as="h2" size="xl" my={2}>
+                    {tripName}
+                </Heading>
+                <div className="text-neutral-500 text-base ">
+                    <Icon as={FaCalendar} w={5} h={5} mr={2} />
+                    {startDateDisplay} - {endDateDisplay}
+                </div>
+            </Card>
+        </ChakraLink>
+    );
 }
 
 function CreateTripCard() {
     return (
-        <Link href="/create">
+        <ChakraLink href="/create">
             <Card
                 p={6}
                 bg="white"
@@ -51,21 +76,18 @@ function CreateTripCard() {
                     </Heading>
                 </AbsoluteCenter>
             </Card>
-        </Link>
+        </ChakraLink>
     );
 }
 
 export default function TripViewCards(props: TripCardsProps) {
     const { cardProps } = props;
 
-    console.log(cardProps);
-
     return (
         <Stack spacing={10} mb={8}>
-            {cardProps.map((props) => (
-                <TripViewCard {...props} />
+            {cardProps.map((tripInfo, index) => (
+                <TripViewCard key={index} {...tripInfo} />
             ))}
-            <TripCardSkeleton />
             <CreateTripCard />
         </Stack>
     );

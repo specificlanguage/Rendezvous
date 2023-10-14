@@ -6,7 +6,7 @@ import TripsSkeleton from "./TripViewSkeletons.tsx";
 import TripViewCards from "./TripViewCards.tsx";
 
 export default function AllTripView() {
-    const { data } = useSWR("/trip/", fetcher);
+    const { data } = useSWR("/user/trips/", fetcher);
 
     return (
         <>
