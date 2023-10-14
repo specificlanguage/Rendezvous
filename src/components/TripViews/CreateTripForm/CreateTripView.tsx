@@ -178,9 +178,9 @@ export default function CreateTripView() {
                         <div className="text-neutral-500 text-base">
                             <Icon as={FaLocationDot} />{" "}
                             {locations.map((location, index) => (
-                                <>
+                                <span key={index}>
                                     {(index ? ", " : "") + location.description}
-                                </>
+                                </span>
                             ))}
                         </div>
                     ) : null}

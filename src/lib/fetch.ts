@@ -33,6 +33,10 @@ export async function fetcher(path: string, options?: RequestInit) {
     const fetchOptions = await updateOptions(options ?? {});
 
     const resp = await fetch(backendURL + path, fetchOptions);
+    if (resp.status == 403) {
+        await FIREBASE_AUTH.signOut();
+    }
+
     return {
         status: resp.status,
         body: await resp.json(),
