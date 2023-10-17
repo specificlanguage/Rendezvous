@@ -23,7 +23,10 @@ export function queryCreateTrip(
     });
 }
 
-export function querySetLocations(tripID: string, locations: LocationInputs[]) {
+export async function querySetLocations(
+    tripID: string,
+    locations: LocationInputs[],
+) {
     return fetcher("/trip/locations", {
         method: "POST",
         body: JSON.stringify({
@@ -33,12 +36,27 @@ export function querySetLocations(tripID: string, locations: LocationInputs[]) {
     });
 }
 
-export function inviteFriends(tripID: string, emails: string[]) {
+export async function inviteFriends(tripID: string, emails: string[]) {
     return fetcher("/trip/invite", {
         method: "POST",
         body: JSON.stringify({
             tripID,
             emails,
         }),
+    });
+}
+
+export async function getAllTripsInfo() {
+    const tripIDs = await fetcher("/user/trips").then(
+        (resp) => resp.body.trips,
+    ); // contains list of [{id: ...}]
+    const tripQueries = tripIDs.map(
+        async (t: { id: string }) => await fetcher(`/trip?tripID=${t.id}`),
+    );
+    const resolvedTripQueries = await Promise.allSettled(tripQueries);
+    return resolvedTripQueries.flatMap((q) => {
+        if (q.status === "fulfilled" && q.value.status === 200) {
+            return [q.value.body];
+        }
     });
 }

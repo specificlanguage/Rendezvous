@@ -1,12 +1,21 @@
-import { fetcher } from "../../../lib/fetch.ts";
-import useSWR from "swr";
 import { Divider, Heading } from "@chakra-ui/react";
 
 import TripsSkeleton from "./TripViewSkeletons.tsx";
 import TripViewCards from "./TripViewCards.tsx";
+import { getAllTripsInfo } from "../../../lib/http/TripQueries.ts";
+import { useEffect, useState } from "react";
 
 export default function AllTripView() {
-    const { data } = useSWR("/user/trips/", fetcher);
+    const [data, setData] = useState<any>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const info = await getAllTripsInfo();
+            setData(info);
+        };
+
+        fetchData().catch((e) => console.log(e));
+    }, []);
 
     return (
         <>
@@ -14,10 +23,10 @@ export default function AllTripView() {
                 Upcoming Trips
             </Heading>
             <Divider mt={4} />
-            {!data ? (
+            {data.length == 0 ? (
                 <TripsSkeleton />
             ) : (
-                <TripViewCards cardProps={data.body.trips} />
+                <TripViewCards cardProps={data} />
             )}
             <Divider mt={4} />
         </>

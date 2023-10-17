@@ -7,7 +7,7 @@ import {
     Stack,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { FaCalendar, FaPlus } from "react-icons/fa6";
+import { FaCalendar, FaLocationDot, FaPlus } from "react-icons/fa6";
 import { format } from "date-fns";
 import { transformDateToTimezone } from "../../../lib/dates.ts";
 
@@ -19,6 +19,7 @@ interface TripViewCardProps {
     created: string;
     startDate: string;
     endDate: string;
+    locations: string[];
 }
 
 interface TripCardsProps {
@@ -26,7 +27,7 @@ interface TripCardsProps {
 }
 
 function TripViewCard(props: TripViewCardProps) {
-    const { id, tripName, startDate, endDate } = props;
+    const { id, tripName, startDate, endDate, locations } = props;
 
     const dateFormat = "MMM d, y";
     const startDateDisplay = format(
@@ -34,6 +35,7 @@ function TripViewCard(props: TripViewCardProps) {
         dateFormat,
     );
     const endDateDisplay = format(transformDateToTimezone(endDate), dateFormat);
+    const locationDisplay = locations.map((l) => l.split(",")[0]);
 
     return (
         <ChakraLink
@@ -52,8 +54,16 @@ function TripViewCard(props: TripViewCardProps) {
                     {tripName}
                 </Heading>
                 <div className="text-neutral-500 text-base ">
-                    <Icon as={FaCalendar} w={5} h={5} mr={2} />
+                    <Icon as={FaCalendar} w={5} h={5} mr={1} />
                     {startDateDisplay} - {endDateDisplay}
+                </div>
+                <div className="text-neutral-500 text-base ">
+                    <Icon as={FaLocationDot} w={5} h={5} mr={1} />
+                    {locationDisplay.map((location, index) => (
+                        <span key={index}>
+                            {(index ? ", " : "") + location}
+                        </span>
+                    ))}
                 </div>
             </Card>
         </ChakraLink>
