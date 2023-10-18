@@ -1,6 +1,6 @@
 import { FormikValues } from "formik";
 import { fetcher } from "../fetch.ts";
-import { LocationInputs } from "../types.ts";
+import { LocationInputs, TripInfo } from "../types.ts";
 
 export interface CreateTripRequestProps extends FormikValues {
     tripName: string;
@@ -8,12 +8,12 @@ export interface CreateTripRequestProps extends FormikValues {
     endDate: string;
 }
 
-export function queryCreateTrip(
+export async function queryCreateTrip(
     tripName: string,
     startDate: string,
     endDate: string,
 ) {
-    return fetcher("/trip/create", {
+    return await fetcher("/trip/create", {
         method: "POST",
         body: JSON.stringify({
             tripName: tripName,
@@ -27,7 +27,7 @@ export async function querySetLocations(
     tripID: string,
     locations: LocationInputs[],
 ) {
-    return fetcher("/trip/locations", {
+    return await fetcher("/trip/locations", {
         method: "POST",
         body: JSON.stringify({
             tripID,
@@ -37,7 +37,7 @@ export async function querySetLocations(
 }
 
 export async function inviteFriends(tripID: string, emails: string[]) {
-    return fetcher("/trip/invite", {
+    return await fetcher("/trip/invite", {
         method: "POST",
         body: JSON.stringify({
             tripID,
@@ -59,4 +59,10 @@ export async function getAllTripsInfo() {
             return [q.value.body];
         }
     });
+}
+
+export async function getTripInfo(
+    tripID: string,
+): Promise<{ status: number; body: TripInfo }> {
+    return await fetcher(`/trip?tripID=${tripID}`);
 }

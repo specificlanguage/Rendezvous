@@ -16,6 +16,7 @@ import AuthProvider from "./layouts/AuthProvider.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import CreateTripPage from "./pages/CreateTripPage.tsx";
+import SingleTripPage from "./pages/SingleTripPage.tsx";
 
 const theme = extendTheme({
     styles: {
@@ -47,6 +48,7 @@ const router = createBrowserRouter(
             >
                 <Route path="/" element={<HomePage />} />
                 <Route path="/create" element={<CreateTripPage />} />
+                <Route path="/trip/:tripID" element={<SingleTripPage />} />
             </Route>
             <Route path="/login" element={<LoginPage />} />
         </Route>,
