@@ -79,6 +79,7 @@ function CreateTripCard() {
                 h="200"
                 variant={"outline"}
                 borderStyle={"dashed"}
+                _hover={{ bgColor: "#fcfcfc" }}
             >
                 <AbsoluteCenter>
                     <Heading as="h4" size="xl" textColor="grey">

@@ -3,6 +3,7 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import { FIREBASE_AUTH } from "../lib/firebase.ts";
 import LoadingSpinner from "../components/LoadingSpinner.tsx";
 import { AuthContext } from "./AuthContext.ts";
+import { Box } from "@chakra-ui/react";
 
 const auth = FIREBASE_AUTH;
 
@@ -29,7 +30,13 @@ export const AuthContextProvider = ({ children }: AuthContextProps) => {
 
     return (
         <AuthContext.Provider value={{ user }}>
-            {loading ? <LoadingSpinner /> : children}
+            {loading ? (
+                <Box position="relative" h="calc(100vh - 16rem)">
+                    <LoadingSpinner />
+                </Box>
+            ) : (
+                children
+            )}
         </AuthContext.Provider>
     );
 };

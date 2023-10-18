@@ -1,5 +1,10 @@
 import CreateTripView from "../components/TripViews/CreateTripForm/CreateTripView.tsx";
+import { AuthProtectedRoute } from "../layouts/ProtectedRoute.tsx";
 
 export default function CreateTripPage() {
-    return <CreateTripView />;
+    return (
+        <AuthProtectedRoute>
+            <CreateTripView />
+        </AuthProtectedRoute>
+    );
 }
