@@ -17,17 +17,16 @@ import {
     Link as ChakraLink,
 } from "@chakra-ui/react";
 import { FIREBASE_AUTH } from "../../lib/firebase.ts";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { useState } from "react";
+import { signOut } from "firebase/auth";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../context/AuthContext.ts";
 
 function UsernameButton() {
     const navigate = useNavigate();
 
     async function signOutUser() {
         await signOut(FIREBASE_AUTH);
-        // TODO Later: Create redux state variable so we don't store this in localStorage.
-        localStorage.setItem("name", "");
+        localStorage.removeItem("name");
         navigate("/login");
     }
 
@@ -64,15 +63,7 @@ function UsernameButton() {
 }
 
 export default function Navbar() {
-    const [isLoggedIn, setLoggedIn] = useState(false);
-
-    onAuthStateChanged(FIREBASE_AUTH, (user) => {
-        if (user) {
-            setLoggedIn(true);
-        } else {
-            setLoggedIn(false);
-        }
-    });
+    const { user } = useAuthContext();
 
     return (
         <>
@@ -95,7 +86,7 @@ export default function Navbar() {
 
                     <Flex alignItems={"center"}>
                         <Stack direction={"row"} spacing={4}>
-                            {isLoggedIn ? (
+                            {user !== null ? (
                                 <UsernameButton />
                             ) : (
                                 <ChakraLink

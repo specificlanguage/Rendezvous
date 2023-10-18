@@ -11,7 +11,7 @@ import {
 } from "react-router-dom";
 
 import Layout from "./layouts/Layout.tsx";
-import AuthProvider from "./layouts/AuthProvider.tsx";
+import { AuthContextProvider } from "./context/AuthProvider.tsx";
 
 import LoginPage from "./pages/LoginPage.tsx";
 import HomePage from "./pages/HomePage.tsx";
@@ -39,17 +39,9 @@ const router = createBrowserRouter(
                 </Layout>
             }
         >
-            <Route
-                element={
-                    <AuthProvider>
-                        <Outlet />
-                    </AuthProvider>
-                }
-            >
-                <Route path="/" element={<HomePage />} />
-                <Route path="/create" element={<CreateTripPage />} />
-                <Route path="/trip/:tripID" element={<SingleTripPage />} />
-            </Route>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/create" element={<CreateTripPage />} />
+            <Route path="/trip/:tripID" element={<SingleTripPage />} />
             <Route path="/login" element={<LoginPage />} />
         </Route>,
     ),
@@ -58,7 +50,9 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <ChakraProvider theme={theme}>
-            <RouterProvider router={router} />
+            <AuthContextProvider>
+                <RouterProvider router={router} />
+            </AuthContextProvider>
         </ChakraProvider>
     </React.StrictMode>,
 );
