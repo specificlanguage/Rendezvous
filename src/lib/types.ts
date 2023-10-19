@@ -8,9 +8,9 @@ export interface TripInfo {
     tripName: string;
     tripImage?: string;
     adminID: string;
-    created: Date;
-    startDate: Date;
-    endDate: Date;
+    created: string;
+    startDate: string;
+    endDate: string;
     locations: string[];
     users: string[];
 }

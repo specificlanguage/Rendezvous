@@ -28,6 +28,13 @@ const theme = extendTheme({
             },
         },
     },
+    semanticTokens: {
+        colors: {
+            error: "red.500",
+            success: "green.500",
+            primary: "purple.600",
+        },
+    },
 });
 
 const router = createBrowserRouter(

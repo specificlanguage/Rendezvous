@@ -4,9 +4,10 @@ import TripsSkeleton from "./TripViewSkeletons.tsx";
 import TripViewCards from "./TripViewCards.tsx";
 import { getAllTripsInfo } from "../../../lib/http/TripQueries.ts";
 import { useEffect, useState } from "react";
+import { TripInfo } from "../../../lib/types.ts";
 
 export default function AllTripView() {
-    const [data, setData] = useState<any>([]);
+    const [data, setData] = useState<TripInfo[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {

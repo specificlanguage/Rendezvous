@@ -11,7 +11,7 @@ interface NavbarLinkProps {
 
 function TripNavbarLink(props: NavbarLinkProps) {
     return (
-        <Box className="text-lg">
+        <Box className="text-lg p-1.5 px-2 hover:bg-purple-800 rounded-md">
             <ChakraLink
                 as={RouterLink}
                 to={props.href}
@@ -35,7 +35,7 @@ export default function TripNavbar() {
     }
 
     return (
-        <Box bg="blue.500" color="white">
+        <Box bg="primary" color="white">
             <HStack
                 h={16}
                 spacing={8}

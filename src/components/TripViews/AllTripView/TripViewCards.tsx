@@ -14,7 +14,7 @@ import { transformDateToTimezone } from "../../../lib/dates.ts";
 interface TripViewCardProps {
     id: string;
     tripName: string;
-    tripImage: string;
+    tripImage?: string;
     adminID: string;
     created: string;
     startDate: string;
