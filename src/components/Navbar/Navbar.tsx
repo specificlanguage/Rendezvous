@@ -15,10 +15,11 @@ import {
     Stack,
     Center,
     Link as ChakraLink,
+    HStack,
 } from "@chakra-ui/react";
 import { FIREBASE_AUTH } from "../../lib/firebase.ts";
 import { signOut } from "firebase/auth";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useMatch, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext.ts";
 
 function UsernameButton() {
@@ -65,14 +66,12 @@ function UsernameButton() {
 export default function Navbar() {
     const { user } = useAuthContext();
 
+    const match = useMatch("/trip/:id");
+
     return (
-        <>
-            <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
-                <Flex
-                    h={16}
-                    alignItems={"center"}
-                    justifyContent={"space-between"}
-                >
+        <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+            <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+                <HStack spacing={12}>
                     <Box className="font-bold text-2xl">
                         <ChakraLink
                             as={RouterLink}
@@ -83,24 +82,36 @@ export default function Navbar() {
                             Rendezvous
                         </ChakraLink>
                     </Box>
+                    {match && match.params.id ? (
+                        <Box className="text-lg">
+                            <ChakraLink
+                                as={RouterLink}
+                                to="/"
+                                textDecoration={"no-underline"}
+                                _hover={{ textDecoration: "no-underline" }}
+                            >
+                                All Trips
+                            </ChakraLink>
+                        </Box>
+                    ) : null}
+                </HStack>
 
-                    <Flex alignItems={"center"}>
-                        <Stack direction={"row"} spacing={4}>
-                            {user !== null ? (
-                                <UsernameButton />
-                            ) : (
-                                <ChakraLink
-                                    as={RouterLink}
-                                    marginTop={1}
-                                    to="/login"
-                                >
-                                    Log In/Sign Up
-                                </ChakraLink>
-                            )}
-                        </Stack>
-                    </Flex>
+                <Flex alignItems={"center"}>
+                    <Stack direction={"row"} spacing={4}>
+                        {user !== null ? (
+                            <UsernameButton />
+                        ) : (
+                            <ChakraLink
+                                as={RouterLink}
+                                marginTop={1}
+                                to="/login"
+                            >
+                                Log In/Sign Up
+                            </ChakraLink>
+                        )}
+                    </Stack>
                 </Flex>
-            </Box>
-        </>
+            </Flex>
+        </Box>
     );
 }

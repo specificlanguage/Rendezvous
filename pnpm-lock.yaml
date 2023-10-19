@@ -47,15 +47,15 @@ dependencies:
     react-social-login-buttons:
         specifier: ^3.9.1
         version: 3.9.1(react@18.2.0)
-    recoil:
-        specifier: ^0.7.7
-        version: 0.7.7(react-dom@18.2.0)(react@18.2.0)
     swr:
         specifier: ^2.2.4
         version: 2.2.4(react@18.2.0)
     yup:
         specifier: ^1.2.0
         version: 1.2.0
+    zustand:
+        specifier: ^4.4.3
+        version: 4.4.3(@types/react@18.2.22)(react@18.2.0)
 
 devDependencies:
     "@types/react":
@@ -4563,13 +4563,6 @@ packages:
             }
         dev: true
 
-    /hamt_plus@1.0.2:
-        resolution:
-            {
-                integrity: sha512-t2JXKaehnMb9paaYA7J0BX8QQAY8lwfQ9Gjf4pg/mk4krt+cmwmU652HOoWonf+7+EQV97ARPMhhVgU1ra2GhA==,
-            }
-        dev: false
-
     /has-flag@3.0.0:
         resolution:
             {
@@ -5806,26 +5799,6 @@ packages:
             picomatch: 2.3.1
         dev: true
 
-    /recoil@0.7.7(react-dom@18.2.0)(react@18.2.0):
-        resolution:
-            {
-                integrity: sha512-8Og5KPQW9LwC577Vc7Ug2P0vQshkv1y3zG3tSSkWMqkWSwHmE+by06L8JtnGocjW6gcCvfwB3YtrJG6/tWivNQ==,
-            }
-        peerDependencies:
-            react: ">=16.13.1"
-            react-dom: "*"
-            react-native: "*"
-        peerDependenciesMeta:
-            react-dom:
-                optional: true
-            react-native:
-                optional: true
-        dependencies:
-            hamt_plus: 1.0.2
-            react: 18.2.0
-            react-dom: 18.2.0(react@18.2.0)
-        dev: false
-
     /regenerator-runtime@0.14.0:
         resolution:
             {
@@ -6663,4 +6636,27 @@ packages:
             tiny-case: 1.0.3
             toposort: 2.0.2
             type-fest: 2.19.0
+        dev: false
+
+    /zustand@4.4.3(@types/react@18.2.22)(react@18.2.0):
+        resolution:
+            {
+                integrity: sha512-oRy+X3ZazZvLfmv6viIaQmtLOMeij1noakIsK/Y47PWYhT8glfXzQ4j0YcP5i0P0qI1A4rIB//SGROGyZhx91A==,
+            }
+        engines: { node: ">=12.7.0" }
+        peerDependencies:
+            "@types/react": ">=16.8"
+            immer: ">=9.0"
+            react: ">=16.8"
+        peerDependenciesMeta:
+            "@types/react":
+                optional: true
+            immer:
+                optional: true
+            react:
+                optional: true
+        dependencies:
+            "@types/react": 18.2.22
+            react: 18.2.0
+            use-sync-external-store: 1.2.0(react@18.2.0)
         dev: false
