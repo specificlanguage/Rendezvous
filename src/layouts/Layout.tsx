@@ -16,7 +16,7 @@ export default function Layout(props: Props) {
                 <Navbar />
                 {match && match.params.id ? <TripNavbar /> : null}
             </header>
-            <main className="md:max-w-3xl lg:mx-auto mx-8 mt-8">
+            <main className="md:max-w-4xl lg:mx-auto mx-8 mt-8">
                 {children}
             </main>
         </div>

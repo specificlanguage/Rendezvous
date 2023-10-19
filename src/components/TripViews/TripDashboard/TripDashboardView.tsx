@@ -6,6 +6,11 @@ import {
     SimpleGrid,
 } from "@chakra-ui/react";
 import { TripInfo } from "../../../lib/types.ts";
+import {
+    TripDatesDisplay,
+    TripLocationsDisplay,
+    TripUsersDisplay,
+} from "../../TripInfoComponents.tsx";
 
 export interface TripHomeViewProps {
     tripData: TripInfo;
@@ -21,7 +26,18 @@ function DashboardBasicInfoCard(props: TripHomeViewProps) {
                     {tripData.tripName}
                 </Heading>
             </CardHeader>
-            <CardBody></CardBody>
+            <CardBody>
+                <TripDatesDisplay
+                    startDate={tripData.startDate}
+                    endDate={tripData.endDate}
+                    style="text-neutral-500"
+                />
+                <TripLocationsDisplay
+                    locations={tripData.locations}
+                    style="text-neutral-500"
+                />
+                <TripUsersDisplay users={tripData.users} />
+            </CardBody>
         </Card>
     );
 }

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { TripInfo } from "../../../lib/types.ts";
 
 export default function AllTripView() {
-    const [data, setData] = useState<TripInfo[]>([]);
+    const [data, setData] = useState<TripInfo[] | undefined>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,7 +25,7 @@ export default function AllTripView() {
                 Upcoming Trips
             </Heading>
             <Divider mt={4} />
-            {data.length == 0 ? (
+            {data === undefined ? (
                 <TripsSkeleton />
             ) : (
                 <TripViewCards cardProps={data} />

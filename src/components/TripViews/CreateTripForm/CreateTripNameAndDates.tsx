@@ -111,13 +111,14 @@ export default function CreateTripNameAndDates(props: CreateTripDateProps) {
                                     id="endDate"
                                     name="endDate"
                                     type="date"
-                                    mb={errors.endDate ? 0 : 6}
                                 />
-                                {errors.endDate ? (
+                                {touched.endDate && !!errors.endDate ? (
                                     <FormErrorMessage>
                                         {errors.endDate}
                                     </FormErrorMessage>
-                                ) : null}
+                                ) : (
+                                    <div className="mt-6" />
+                                )}
                             </FormControl>
                         </HStack>
                         <Button

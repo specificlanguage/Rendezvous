@@ -42,7 +42,7 @@ export default function SignupForm() {
             .min(6, passwordErrorMessage)
             .required("Required")
             .matches(
-                /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/,
+                /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&?<>() "]).*$/,
                 passwordErrorMessage,
             ),
         verifyPassword: Yup.string().oneOf(

@@ -46,7 +46,7 @@ export async function inviteFriends(tripID: string, emails: string[]) {
     });
 }
 
-export async function getAllTripsInfo() {
+export async function getAllTripsInfo(): Promise<TripInfo[]> {
     const tripIDs = await fetcher("/user/trips").then(
         (resp) => resp.body.trips,
     ); // contains list of [{id: ...}]

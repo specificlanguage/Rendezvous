@@ -12,7 +12,7 @@ export interface TripInfo {
     startDate: string;
     endDate: string;
     locations: string[];
-    users: string[];
+    users: UserInfo[];
 }
 
 export interface UserInfo {

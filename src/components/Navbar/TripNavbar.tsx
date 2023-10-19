@@ -1,8 +1,8 @@
 import {
     Box,
-    Center,
     Divider,
     Flex,
+    Heading,
     HStack,
     Link as ChakraLink,
     Spacer,
@@ -47,72 +47,71 @@ export default function TripNavbar() {
         return null;
     }
 
+    // TODO: responsive check to collapse menu into submenu
+
     return (
         <Box bg="primary" color="white">
-            <Center>
-                <Flex maxW={"3xl"}>
-                    <HStack
-                        h={16}
-                        spacing={4}
-                        mb={0}
-                        alignItems={"center"}
-                        w={"3xl"}
-                        mx={"auto"}
-                    >
-                        <Box className="font-bold text-2xl">
-                            <ChakraLink
-                                as={RouterLink}
-                                to={`/trip/${trip.id}`}
-                                textDecoration={"no-underline"}
-                                _hover={{ textDecoration: "no-underline" }}
-                            >
-                                {trip.tripName}
-                            </ChakraLink>
-                        </Box>
-                        <TripNavbarLink
-                            href={`/trip/${trip.id}`}
-                            displayName={"Dashboard"}
-                        />
-                        <Divider orientation="vertical" h="32px" />
-                        <TripNavbarLink
-                            href={`/trip/${trip.id}/flights`}
-                            displayName={"Flights"}
-                        />
-                        <TripNavbarLink
-                            href={`/trip/${trip.id}/hotels`}
-                            displayName={"Hotels"}
-                        />
-                        <TripNavbarLink
-                            href={`/trip/${trip.id}/plans`}
-                            displayName={"Plans"}
-                        />
-                    </HStack>
-                    <Spacer />
-                    <HStack>
-                        <TripNavbarLink
-                            href={`/trip/${trip.id}/invite`}
-                            displayName={"Invite"}
-                        />
-                        {isAdminOnTrip(
-                            trip,
-                            FIREBASE_AUTH.currentUser?.uid ?? "",
-                        ) ? (
-                            <TripNavbarLink
-                                href={`/trip/${trip.id}/manage`}
-                                displayName={"Manage"}
-                            />
-                        ) : null}
-                    </HStack>
-                </Flex>
-            </Center>
-            {/* TODO: fix margins here on the navbar */}
-            <HStack h={12} spacing={8} mt={-3} mb={4} w={"3xl"} mx={"auto"}>
+            <HStack h={12} spacing={8} w={"4xl"} mx={"auto"}>
+                <ChakraLink
+                    as={RouterLink}
+                    to={`/trip/${trip.id}`}
+                    textDecoration={"no-underline"}
+                    _hover={{ textDecoration: "no-underline" }}
+                >
+                    <Heading size={"base"} ml={1.5}>
+                        {trip.tripName.length > 32
+                            ? trip.tripName.slice(0, 32)
+                            : trip.tripName}
+                    </Heading>
+                </ChakraLink>
                 <TripDatesDisplay
                     startDate={trip.startDate}
                     endDate={trip.endDate}
+                    dateFormat={"MM/dd/yy"}
+                    style={"text-base"}
                 />
-                <TripLocationsDisplay locations={trip.locations} />
+                <TripLocationsDisplay
+                    locations={trip.locations}
+                    style={"text-base"}
+                />
             </HStack>
+            <Flex maxW={"4xl"} mx={"auto"}>
+                <HStack h={16} spacing={4} mb={0} alignItems={"center"}>
+                    <TripNavbarLink
+                        href={`/trip/${trip.id}`}
+                        displayName={"Dashboard"}
+                    />
+                    <Divider orientation="vertical" h="32px" />
+                    <TripNavbarLink
+                        href={`/trip/${trip.id}/flights`}
+                        displayName={"Flights"}
+                    />
+                    <TripNavbarLink
+                        href={`/trip/${trip.id}/hotels`}
+                        displayName={"Hotels"}
+                    />
+                    <TripNavbarLink
+                        href={`/trip/${trip.id}/plans`}
+                        displayName={"Plans"}
+                    />
+                </HStack>
+                <Spacer />
+                <HStack>
+                    <TripNavbarLink
+                        href={`/trip/${trip.id}/invite`}
+                        displayName={"Invite"}
+                    />
+                    {isAdminOnTrip(
+                        trip,
+                        FIREBASE_AUTH.currentUser?.uid ?? "",
+                    ) ? (
+                        <TripNavbarLink
+                            href={`/trip/${trip.id}/manage`}
+                            displayName={"Manage"}
+                        />
+                    ) : null}
+                </HStack>
+            </Flex>
         </Box>
     );
 }

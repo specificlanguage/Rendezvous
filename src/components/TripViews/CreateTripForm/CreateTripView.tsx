@@ -20,7 +20,7 @@ import {
     Text,
     useSteps,
 } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaCalendar, FaLocationDot } from "react-icons/fa6";
 import CreateTripNameAndDates from "./CreateTripNameAndDates.tsx";
 import CreateTripLocations from "./CreateTripLocations.tsx";
@@ -45,6 +45,7 @@ export default function CreateTripView() {
     const [tripName, setTripName] = useState("");
     const [dates, setDates] = useState({ startDate: "", endDate: "" });
     const [locations, setLocations] = useState<LocationInputs[]>([]);
+    const navigate = useNavigate();
 
     const { activeStep, setActiveStep } = useSteps({
         index: 0,
@@ -81,10 +82,11 @@ export default function CreateTripView() {
                                 fontSize="30px"
                                 color="black"
                                 my={1}
+                                size="lg"
                             >
                                 Add Destinations
                             </Heading>
-                            <Text>
+                            <Text size={"md"}>
                                 Search for destinations for the trip that
                                 *you'd* like to go to, not locations that you
                                 (or others) are departing from.
@@ -116,7 +118,7 @@ export default function CreateTripView() {
                         </CardHeader>
                         <CardBody>
                             <CreateTripInvites
-                                onSubmit={() => console.log("hello")}
+                                onSubmit={() => navigate(`/trip/${tripID}`)}
                                 tripID={tripID}
                             />
                         </CardBody>
