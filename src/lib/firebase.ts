@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { TripInfo } from "./types.ts";
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -12,3 +13,7 @@ const firebaseConfig = {
 
 export const FirebaseApp = initializeApp(firebaseConfig);
 export const FIREBASE_AUTH = getAuth(FirebaseApp);
+
+export function isAdminOnTrip(tripInfo: TripInfo, accountID: string) {
+    return tripInfo.adminID === accountID;
+}
