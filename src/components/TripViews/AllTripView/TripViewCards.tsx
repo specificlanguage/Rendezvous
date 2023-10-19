@@ -1,5 +1,6 @@
 import {
     AbsoluteCenter,
+    Box,
     Card,
     Heading,
     Icon,
@@ -7,9 +8,11 @@ import {
     Stack,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { FaCalendar, FaLocationDot, FaPlus } from "react-icons/fa6";
-import { format } from "date-fns";
-import { transformDateToTimezone } from "../../../lib/dates.ts";
+import { FaPlus } from "react-icons/fa6";
+import {
+    TripDatesDisplay,
+    TripLocationsDisplay,
+} from "../../TripInfoComponents.tsx";
 
 interface TripViewCardProps {
     id: string;
@@ -29,14 +32,6 @@ interface TripCardsProps {
 function TripViewCard(props: TripViewCardProps) {
     const { id, tripName, startDate, endDate, locations } = props;
 
-    const dateFormat = "MMM d, y";
-    const startDateDisplay = format(
-        transformDateToTimezone(startDate),
-        dateFormat,
-    );
-    const endDateDisplay = format(transformDateToTimezone(endDate), dateFormat);
-    const locationDisplay = locations.map((l) => l.split(",")[0]);
-
     return (
         <ChakraLink
             as={RouterLink}
@@ -53,18 +48,17 @@ function TripViewCard(props: TripViewCardProps) {
                 <Heading as="h2" size="xl" my={2}>
                     {tripName}
                 </Heading>
-                <div className="text-neutral-500 text-base ">
-                    <Icon as={FaCalendar} w={5} h={5} mr={1} />
-                    {startDateDisplay} - {endDateDisplay}
-                </div>
-                <div className="text-neutral-500 text-base ">
-                    <Icon as={FaLocationDot} w={5} h={5} mr={1} />
-                    {locationDisplay.map((location, index) => (
-                        <span key={index}>
-                            {(index ? ", " : "") + location}
-                        </span>
-                    ))}
-                </div>
+                <Box color="gray.500">
+                    <TripDatesDisplay
+                        startDate={startDate}
+                        endDate={endDate}
+                        css="text-neutral-500"
+                    />
+                    <TripLocationsDisplay
+                        locations={locations}
+                        css="text-neutral-500"
+                    />
+                </Box>
             </Card>
         </ChakraLink>
     );

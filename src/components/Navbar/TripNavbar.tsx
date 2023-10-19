@@ -1,8 +1,12 @@
-import { Box, HStack, Link as ChakraLink } from "@chakra-ui/react";
+import { Box, Divider, HStack, Link as ChakraLink } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { useStore } from "zustand";
 import { tripStore } from "../../lib/stores.ts";
 import { TripInfo } from "../../lib/types.ts";
+import {
+    TripDatesDisplay,
+    TripLocationsDisplay,
+} from "../TripInfoComponents.tsx";
 
 interface NavbarLinkProps {
     href: string;
@@ -38,7 +42,8 @@ export default function TripNavbar() {
         <Box bg="primary" color="white">
             <HStack
                 h={16}
-                spacing={8}
+                spacing={4}
+                mb={0}
                 alignItems={"center"}
                 w={"3xl"}
                 mx={"auto"}
@@ -57,6 +62,7 @@ export default function TripNavbar() {
                     href={`/trip/${trip.id}`}
                     displayName={"Dashboard"}
                 />
+                <Divider orientation="vertical" h="32px" />
                 <TripNavbarLink
                     href={`/trip/${trip.id}/flights`}
                     displayName={"Flights"}
@@ -69,6 +75,14 @@ export default function TripNavbar() {
                     href={`/trip/${trip.id}/plans`}
                     displayName={"Plans"}
                 />
+            </HStack>
+            {/* TODO: fix margins here on the navbar */}
+            <HStack h={12} spacing={8} mt={-3} mb={4} w={"3xl"} mx={"auto"}>
+                <TripDatesDisplay
+                    startDate={trip.startDate}
+                    endDate={trip.endDate}
+                />
+                <TripLocationsDisplay locations={trip.locations} />
             </HStack>
         </Box>
     );
