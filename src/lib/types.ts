@@ -14,3 +14,9 @@ export interface TripInfo {
     locations: string[];
     users: string[];
 }
+
+export interface UserInfo {
+    id: string;
+    name: string;
+    imageURL?: string;
+}

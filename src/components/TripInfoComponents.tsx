@@ -1,7 +1,8 @@
-import { Icon, Text } from "@chakra-ui/react";
+import { Avatar, AvatarGroup, Icon, Text } from "@chakra-ui/react";
 import { FaCalendar, FaLocationDot } from "react-icons/fa6";
 import { format } from "date-fns";
 import { transformDateToTimezone } from "../lib/dates.ts";
+import { UserInfo } from "../lib/types.ts";
 
 interface TripDatesDisplayProps {
     startDate: string;
@@ -12,6 +13,10 @@ interface TripDatesDisplayProps {
 interface TripLocationsDisplayProps {
     locations: string[];
     css?: string;
+}
+
+interface TripUsersDisplayProps {
+    users: UserInfo[];
 }
 
 export function TripDatesDisplay(props: TripDatesDisplayProps) {
@@ -43,5 +48,15 @@ export function TripLocationsDisplay(props: TripLocationsDisplayProps) {
                 <span key={index}>{(index ? ", " : "") + location}</span>
             ))}
         </Text>
+    );
+}
+
+export function TripUsersDisplay(props: TripUsersDisplayProps) {
+    return (
+        <AvatarGroup size="md" max={10} py={2}>
+            {props.users.map((usr) => (
+                <Avatar name={usr.name} src={usr.imageURL ?? ""} />
+            ))}
+        </AvatarGroup>
     );
 }

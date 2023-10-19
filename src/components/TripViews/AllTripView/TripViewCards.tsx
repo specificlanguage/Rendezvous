@@ -12,7 +12,9 @@ import { FaPlus } from "react-icons/fa6";
 import {
     TripDatesDisplay,
     TripLocationsDisplay,
+    TripUsersDisplay,
 } from "../../TripInfoComponents.tsx";
+import { UserInfo } from "../../../lib/types.ts";
 
 interface TripViewCardProps {
     id: string;
@@ -23,6 +25,7 @@ interface TripViewCardProps {
     startDate: string;
     endDate: string;
     locations: string[];
+    users: UserInfo[];
 }
 
 interface TripCardsProps {
@@ -30,7 +33,7 @@ interface TripCardsProps {
 }
 
 function TripViewCard(props: TripViewCardProps) {
-    const { id, tripName, startDate, endDate, locations } = props;
+    const { id, tripName, startDate, endDate, locations, users } = props;
 
     return (
         <ChakraLink
@@ -58,6 +61,7 @@ function TripViewCard(props: TripViewCardProps) {
                         locations={locations}
                         css="text-neutral-500"
                     />
+                    <TripUsersDisplay users={users} />
                 </Box>
             </Card>
         </ChakraLink>

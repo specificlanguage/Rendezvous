@@ -12,6 +12,7 @@ export default function AllTripView() {
     useEffect(() => {
         const fetchData = async () => {
             const info = await getAllTripsInfo();
+            console.log(info);
             setData(info);
         };
 
