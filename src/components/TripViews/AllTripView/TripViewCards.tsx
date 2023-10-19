@@ -55,11 +55,11 @@ function TripViewCard(props: TripViewCardProps) {
                     <TripDatesDisplay
                         startDate={startDate}
                         endDate={endDate}
-                        css="text-neutral-500"
+                        style="text-neutral-500"
                     />
                     <TripLocationsDisplay
                         locations={locations}
-                        css="text-neutral-500"
+                        style="text-neutral-500"
                     />
                     <TripUsersDisplay users={users} />
                 </Box>

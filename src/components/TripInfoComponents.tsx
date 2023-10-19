@@ -7,12 +7,12 @@ import { UserInfo } from "../lib/types.ts";
 interface TripDatesDisplayProps {
     startDate: string;
     endDate: string;
-    css?: string;
+    style?: string;
 }
 
 interface TripLocationsDisplayProps {
     locations: string[];
-    css?: string;
+    style?: string;
 }
 
 interface TripUsersDisplayProps {
