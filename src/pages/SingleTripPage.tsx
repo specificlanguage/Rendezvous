@@ -3,8 +3,7 @@ import TripDashboardView from "../components/TripViews/TripDashboard/TripDashboa
 import { fetcher } from "../lib/fetch.ts";
 import { useEffect, useState } from "react";
 import { TripInfo } from "../lib/types.ts";
-import LoadingSpinner from "../components/LoadingSpinner.tsx";
-import { Box } from "@chakra-ui/react";
+import { FullPageLoadingSpinner } from "../components/LoadingSpinner.tsx";
 import { useStore } from "zustand";
 import { tripStore } from "../lib/stores.ts";
 
@@ -36,11 +35,7 @@ export default function SingleTripPage() {
     }, [tripID]);
 
     if (!tripData) {
-        return (
-            <Box position="relative" h="calc(100vh - 16rem)">
-                <LoadingSpinner />
-            </Box>
-        );
+        return <FullPageLoadingSpinner />;
     }
 
     return <TripDashboardView tripData={tripData} />;

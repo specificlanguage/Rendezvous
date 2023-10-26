@@ -17,6 +17,7 @@ import LoginPage from "./pages/LoginPage.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import CreateTripPage from "./pages/CreateTripPage.tsx";
 import SingleTripPage from "./pages/SingleTripPage.tsx";
+import InvitePage from "./pages/InvitePage.tsx";
 
 const theme = extendTheme({
     styles: {
@@ -50,6 +51,7 @@ const router = createBrowserRouter(
             <Route path="/create" element={<CreateTripPage />} />
             <Route path="/trip/:tripID" element={<SingleTripPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/invite/:inviteID" element={<InvitePage />} />
         </Route>,
     ),
 );
