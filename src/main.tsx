@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.scss";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import {
     createBrowserRouter,
     createRoutesFromElements,
@@ -18,25 +18,7 @@ import HomePage from "./pages/HomePage.tsx";
 import CreateTripPage from "./pages/CreateTripPage.tsx";
 import SingleTripPage from "./pages/SingleTripPage.tsx";
 import InvitePage from "./pages/InvitePage.tsx";
-
-const theme = extendTheme({
-    styles: {
-        global: {
-            html: {
-                bg: "neutral-100",
-                color: "neutral-900",
-                minH: "calc(100vh)",
-            },
-        },
-    },
-    semanticTokens: {
-        colors: {
-            error: "red.500",
-            success: "green.500",
-            primary: "purple.600",
-        },
-    },
-});
+import { APP_THEME } from "./lib/styles.ts";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -58,7 +40,7 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <ChakraProvider theme={theme}>
+        <ChakraProvider theme={APP_THEME}>
             <AuthContextProvider>
                 <RouterProvider router={router} />
             </AuthContextProvider>
