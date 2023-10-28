@@ -43,14 +43,14 @@ export default function InviteAccept(props: InviteAcceptProps) {
                     <br />
                     Sign up to coordinate travel with all your friends!
                 </Text>
-                <Center>
+                <Center mt={5}>
                     <Button
                         onClick={onSubmit}
                         type="button"
+                        size="lg"
                         colorScheme="purple"
-                        variant="outline"
                     >
-                        Join
+                        Join {tripInfo.tripName}
                     </Button>
                 </Center>
             </CardBody>

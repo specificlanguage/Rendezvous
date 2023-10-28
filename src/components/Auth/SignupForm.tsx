@@ -21,7 +21,11 @@ import { fetcher } from "../../lib/fetch.ts";
 import { useState } from "react";
 import AltSignIns from "./AltSignInButton.tsx";
 
-export default function SignupForm() {
+interface SignupFormProps {
+    onSubmit?: () => void;
+}
+
+export default function SignupForm(formProps: SignupFormProps) {
     const auth = FIREBASE_AUTH;
     const navigate = useNavigate();
     const [signupError, setError] = useState(false);
@@ -75,9 +79,13 @@ export default function SignupForm() {
         await fetcher("/user/signup", {
             method: "POST",
             body: JSON.stringify({ name: name, email: email }),
-        }).then((resp) => {
+        }).then(async (resp) => {
             localStorage.setItem("name", resp.body.name);
-            navigate("/");
+            if (formProps.onSubmit) {
+                await formProps.onSubmit();
+            } else {
+                navigate("/");
+            }
         });
     }
 

@@ -20,7 +20,11 @@ import { fetcher } from "../../lib/fetch.ts";
 import { useState } from "react";
 import AltSignIns from "./AltSignInButton.tsx";
 
-export default function LoginForm() {
+interface LoginFormProps {
+    onSubmit?: () => void;
+}
+
+export default function LoginForm(formProps: LoginFormProps) {
     const navigate = useNavigate();
     const [signupError, setError] = useState(false);
 
@@ -53,7 +57,11 @@ export default function LoginForm() {
 
         await fetcher("/user/get", {}).then((resp) => {
             localStorage.setItem("name", resp.body.name);
-            navigate("/");
+            if (formProps.onSubmit) {
+                formProps.onSubmit();
+            } else {
+                navigate("/");
+            }
         });
     }
 

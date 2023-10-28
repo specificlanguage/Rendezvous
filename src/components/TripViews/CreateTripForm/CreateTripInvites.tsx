@@ -1,7 +1,7 @@
 import {
+    Field,
     FieldArray,
     FieldArrayRenderProps,
-    Form,
     Formik,
     FormikValues,
 } from "formik";
@@ -28,12 +28,19 @@ interface EmailInputProps {
     arrayHelpers: FieldArrayRenderProps;
 }
 
+interface InviteFormValues {
+    emails: string[];
+}
+
 const validationSchema = Yup.object().shape({
-    emails: Yup.array().of(Yup.string().email().required()),
+    emails: Yup.array().of(Yup.string().email()),
 });
 
 export default function CreateTripInvites(props: CreateTripInviteProps) {
     const { onSubmit, tripID } = props;
+    const initialValues: InviteFormValues = {
+        emails: [],
+    };
 
     async function submit(values: FormikValues) {
         if (values.emails.length > 0) {
@@ -49,6 +56,7 @@ export default function CreateTripInvites(props: CreateTripInviteProps) {
             <FormControl>
                 <Flex>
                     <Input
+                        as={Field}
                         name={`emails.${index}`}
                         placeholder={`friend${index + 1}@email.com`}
                         type="email"
@@ -67,14 +75,14 @@ export default function CreateTripInvites(props: CreateTripInviteProps) {
 
     return (
         <Formik
-            initialValues={{
-                emails: [],
-            }}
+            initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={submit}
+            onSubmit={(values) => {
+                submit(values);
+            }}
         >
             {({ handleSubmit, values, isSubmitting }) => (
-                <Form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <FieldArray
                         name={"emails"}
                         render={(arrayHelpers) => (
@@ -109,7 +117,7 @@ export default function CreateTripInvites(props: CreateTripInviteProps) {
                     >
                         Create Trip
                     </Button>
-                </Form>
+                </form>
             )}
         </Formik>
     );
