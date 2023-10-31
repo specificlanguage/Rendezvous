@@ -24,7 +24,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaCalendar, FaLocationDot } from "react-icons/fa6";
 import CreateTripNameAndDates from "./CreateTripNameAndDates.tsx";
 import CreateTripLocations from "./CreateTripLocations.tsx";
-import CreateTripInvites from "./CreateTripInvites.tsx";
+import InviteUsersView from "../../Invite/InviteUsersView.tsx";
 import { useState } from "react";
 import { LocationInputs } from "../../../lib/types.ts";
 
@@ -117,9 +117,10 @@ export default function CreateTripView() {
                             </Text>
                         </CardHeader>
                         <CardBody>
-                            <CreateTripInvites
+                            <InviteUsersView
                                 onSubmit={() => navigate(`/trip/${tripID}`)}
                                 tripID={tripID}
+                                creatingTrip={true}
                             />
                         </CardBody>
                     </Card>

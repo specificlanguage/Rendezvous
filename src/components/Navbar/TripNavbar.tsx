@@ -1,11 +1,14 @@
 import {
     Box,
+    Button,
+    createStandaloneToast,
     Divider,
     Flex,
     Heading,
     HStack,
     Link as ChakraLink,
     Spacer,
+    useDisclosure,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import { useStore } from "zustand";
@@ -16,9 +19,16 @@ import {
     TripLocationsDisplay,
 } from "../TripInfoComponents.tsx";
 import { FIREBASE_AUTH, isAdminOnTrip } from "../../lib/firebase.ts";
+import InviteModal from "../Invite/InviteModal.tsx";
+import { APP_THEME } from "../../lib/styles.ts";
 
 interface NavbarLinkProps {
     href: string;
+    displayName: string;
+}
+
+interface InviteButtonProps {
+    tripID: string;
     displayName: string;
 }
 
@@ -34,6 +44,50 @@ function TripNavbarLink(props: NavbarLinkProps) {
                 {props.displayName}
             </ChakraLink>
         </Box>
+    );
+}
+
+function OpenInviteModal(props: InviteButtonProps) {
+    const { toast } = createStandaloneToast({ theme: APP_THEME });
+    const toastID = "invite-success";
+
+    function openFeedbackToast() {
+        if (!toast.isActive(toastID)) {
+            toast({
+                id: toastID,
+                title: "User(s) invited!",
+                description: "Let them know to check their email soon.",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+            });
+        }
+    }
+
+    const { isOpen, onOpen, onClose } = useDisclosure({
+        onClose: openFeedbackToast,
+    });
+
+    return (
+        <>
+            <Button
+                _hover={{
+                    textDecoration: "no-underline",
+                    bg: "purple.800",
+                    color: "white",
+                }}
+                className="text-lg p-1.5 px-2 hover:bg-purple-800 rounded-md"
+                onClick={onOpen}
+            >
+                {props.displayName}
+            </Button>
+            <InviteModal
+                isOpen={isOpen}
+                onOpen={onOpen}
+                onClose={onClose}
+                tripID={props.tripID}
+            />
+        </>
     );
 }
 
@@ -97,10 +151,7 @@ export default function TripNavbar() {
                 </HStack>
                 <Spacer />
                 <HStack>
-                    <TripNavbarLink
-                        href={`/trip/${trip.id}/invite`}
-                        displayName={"Invite"}
-                    />
+                    <OpenInviteModal displayName={"Invite"} tripID={trip.id} />
                     {isAdminOnTrip(
                         trip,
                         FIREBASE_AUTH.currentUser?.uid ?? "",

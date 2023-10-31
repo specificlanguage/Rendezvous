@@ -16,11 +16,12 @@ import {
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { FaMinus, FaPlus } from "react-icons/fa6";
-import { inviteFriends } from "../../../lib/http/TripQueries.ts";
+import { inviteFriends } from "../../lib/http/TripQueries.ts";
 
 interface CreateTripInviteProps {
     onSubmit: () => void;
     tripID: string;
+    creatingTrip?: boolean;
 }
 
 interface EmailInputProps {
@@ -36,8 +37,8 @@ const validationSchema = Yup.object().shape({
     emails: Yup.array().of(Yup.string().email()),
 });
 
-export default function CreateTripInvites(props: CreateTripInviteProps) {
-    const { onSubmit, tripID } = props;
+export default function InviteUsersView(props: CreateTripInviteProps) {
+    const { onSubmit, tripID, creatingTrip } = props;
     const initialValues: InviteFormValues = {
         emails: [],
     };
@@ -115,7 +116,7 @@ export default function CreateTripInvites(props: CreateTripInviteProps) {
                         colorScheme="blue"
                         isLoading={isSubmitting}
                     >
-                        Create Trip
+                        {creatingTrip ? "Create Trip" : "Invite"}
                     </Button>
                 </form>
             )}
