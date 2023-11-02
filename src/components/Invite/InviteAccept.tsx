@@ -7,7 +7,7 @@ import {
     Heading,
     Text,
 } from "@chakra-ui/react";
-import { TripInfo } from "../../lib/types.ts";
+import { TripInfo, UserInfo } from "../../lib/types.ts";
 import {
     TripDatesDisplay,
     TripLocationsDisplay,
@@ -20,8 +20,22 @@ interface InviteAcceptProps {
     onSubmit: () => Promise<void>;
 }
 
+const TEMP_USER: UserInfo = {
+    id: "",
+    name: "",
+};
+
 export default function InviteAccept(props: InviteAcceptProps) {
     const { tripInfo, onSubmit } = props;
+
+    let newLength = 0;
+    if (tripInfo.numUsers) {
+        newLength = tripInfo.numUsers - 1;
+    }
+
+    const unknownUsers: UserInfo[] = Array(newLength).fill(
+        TEMP_USER,
+    ) as UserInfo[];
 
     return (
         <Card>
@@ -34,14 +48,14 @@ export default function InviteAccept(props: InviteAcceptProps) {
                     endDate={tripInfo.endDate}
                 />
                 <TripLocationsDisplay locations={tripInfo.locations} />
-                <TripUsersDisplay users={tripInfo.users} />
+                <TripUsersDisplay users={tripInfo.users.concat(unknownUsers)} />
             </CardHeader>
             <CardBody>
                 <Text>
                     You've been invited to <b>{tripInfo.tripName}</b> on
                     Rendezvous! If you didn't expect this, close this tab.
                     <br />
-                    Sign up to coordinate travel with all your friends!
+                    Join to coordinate travel with all your friends!
                 </Text>
                 <Center mt={5}>
                     <Button

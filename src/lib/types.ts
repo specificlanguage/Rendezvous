@@ -13,6 +13,7 @@ export interface TripInfo {
     endDate: string;
     locations: string[];
     users: UserInfo[];
+    numUsers?: number;
 }
 
 export interface UserInfo {
