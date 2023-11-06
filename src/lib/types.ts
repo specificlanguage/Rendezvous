@@ -20,4 +20,5 @@ export interface UserInfo {
     id: string;
     name: string;
     imageURL?: string;
+    email: string;
 }
