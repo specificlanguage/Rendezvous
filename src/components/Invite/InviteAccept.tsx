@@ -23,6 +23,7 @@ interface InviteAcceptProps {
 const TEMP_USER: UserInfo = {
     id: "",
     name: "",
+    email: "",
 };
 
 export default function InviteAccept(props: InviteAcceptProps) {

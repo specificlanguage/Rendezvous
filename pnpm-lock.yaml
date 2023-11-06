@@ -29,9 +29,6 @@ dependencies:
     formik:
         specifier: ^2.4.5
         version: 2.4.5(react@18.2.0)
-    framer-motion:
-        specifier: ^10.16.4
-        version: 10.16.4(react-dom@18.2.0)(react@18.2.0)
     react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -50,9 +47,6 @@ dependencies:
     react-social-login-buttons:
         specifier: ^3.9.1
         version: 3.9.1(react@18.2.0)
-    swr:
-        specifier: ^2.2.4
-        version: 2.2.4(react@18.2.0)
     yup:
         specifier: ^1.2.0
         version: 1.2.0
@@ -3634,13 +3628,6 @@ packages:
             string-width: 5.1.2
         dev: true
 
-    /client-only@0.0.1:
-        resolution:
-            {
-                integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==,
-            }
-        dev: false
-
     /cliui@8.0.1:
         resolution:
             {
@@ -6126,19 +6113,6 @@ packages:
                 integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==,
             }
         engines: { node: ">= 0.4" }
-
-    /swr@2.2.4(react@18.2.0):
-        resolution:
-            {
-                integrity: sha512-njiZ/4RiIhoOlAaLYDqwz5qH/KZXVilRLvomrx83HjzCWTfa+InyfAjv05PSFxnmLzZkNO9ZfvgoqzAaEI4sGQ==,
-            }
-        peerDependencies:
-            react: ^16.11.0 || ^17.0.0 || ^18.0.0
-        dependencies:
-            client-only: 0.0.1
-            react: 18.2.0
-            use-sync-external-store: 1.2.0(react@18.2.0)
-        dev: false
 
     /synckit@0.8.5:
         resolution:
