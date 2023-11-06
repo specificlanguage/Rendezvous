@@ -79,7 +79,7 @@ function OpenInviteModal(props: InviteButtonProps) {
                     bg: "purple.800",
                     color: "white",
                 }}
-                className="text-lg p-1.5 px-2 hover:bg-purple-800 rounded-md"
+                className="text-lg p-1.5 px-2 bg-white hover:bg-purple-800 rounded-md"
                 onClick={onOpen}
             >
                 {props.displayName}

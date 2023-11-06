@@ -19,6 +19,7 @@ import CreateTripPage from "./pages/CreateTripPage.tsx";
 import SingleTripPage from "./pages/SingleTripPage.tsx";
 import InvitePage from "./pages/InvitePage.tsx";
 import { APP_THEME } from "./lib/styles.ts";
+import FlightPage from "./pages/FlightPage.tsx";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -31,7 +32,10 @@ const router = createBrowserRouter(
         >
             <Route path="/" element={<HomePage />} />
             <Route path="/create" element={<CreateTripPage />} />
-            <Route path="/trip/:tripID" element={<SingleTripPage />} />
+            <Route path="/trip/:tripID">
+                <Route index element={<SingleTripPage />} />
+                <Route path="flights" element={<FlightPage />} />
+            </Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/invite/:inviteID" element={<InvitePage />} />
         </Route>,

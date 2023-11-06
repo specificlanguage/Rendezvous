@@ -22,3 +22,13 @@ export interface UserInfo {
     imageURL?: string;
     email: string;
 }
+
+export interface FlightInfo {
+    id: string;
+    tripID: string;
+    carrierCode: string;
+    flightNum: number;
+    depTime?: Date;
+    arrTime?: Date;
+    passengers: UserInfo[];
+}

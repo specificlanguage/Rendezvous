@@ -8,7 +8,7 @@ interface Props {
 
 export default function Layout(props: Props) {
     const { children } = props;
-    const match = useMatch("/trip/:id");
+    const match = useMatch("/trip/:id/*");
 
     return (
         <div>
