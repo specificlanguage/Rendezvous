@@ -64,9 +64,12 @@ function OpenInviteModal(props: InviteButtonProps) {
         }
     }
 
-    const { isOpen, onOpen, onClose } = useDisclosure({
-        onClose: openFeedbackToast,
-    });
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    function onSubmit() {
+        openFeedbackToast();
+        onClose();
+    }
 
     return (
         <>
@@ -85,6 +88,7 @@ function OpenInviteModal(props: InviteButtonProps) {
                 isOpen={isOpen}
                 onOpen={onOpen}
                 onClose={onClose}
+                onSubmit={onSubmit}
                 tripID={props.tripID}
             />
         </>

@@ -111,7 +111,7 @@ export default function InviteUsersView(props: CreateTripInviteProps) {
                         )}
                     />
                     <Button
-                        mt={6}
+                        my={4}
                         type="submit"
                         colorScheme="blue"
                         isLoading={isSubmitting}

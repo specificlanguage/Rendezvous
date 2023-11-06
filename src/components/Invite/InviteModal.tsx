@@ -15,11 +15,12 @@ interface InviteModalProps extends UseDisclosureProps {
     isOpen: boolean;
     onOpen: () => void;
     onClose: () => void;
+    onSubmit: () => void;
     tripID: string;
 }
 
 export default function InviteModal(props: InviteModalProps) {
-    const { isOpen, onClose, tripID } = props;
+    const { isOpen, onClose, onSubmit, tripID } = props;
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -31,7 +32,7 @@ export default function InviteModal(props: InviteModalProps) {
                 <ModalBody>
                     <Stack spacing={4}>
                         <Text>Send an invite to a friend's email!</Text>
-                        <InviteUsersView onSubmit={onClose} tripID={tripID} />
+                        <InviteUsersView onSubmit={onSubmit} tripID={tripID} />
                     </Stack>
                 </ModalBody>
             </ModalContent>
