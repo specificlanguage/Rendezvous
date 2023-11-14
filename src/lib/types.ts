@@ -28,7 +28,9 @@ export interface FlightInfo {
     tripID: string;
     carrierCode: string;
     flightNum: number;
-    depTime?: Date;
-    arrTime?: Date;
+    origin: string;
+    destination: string;
+    departure: Date | string;
+    arrival: Date | string;
     passengers: UserInfo[];
 }

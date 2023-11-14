@@ -25,6 +25,7 @@ export default function ImportFlightForm(props: ImportFlightFormProps) {
         carrierCode: Yup.string().required(),
         flightNumber: Yup.number().required().min(1).max(9999),
         flightDate: Yup.date().required("Departure date is required"),
+        // .min(new Date(), "Date needs to be after today"),
     });
 
     return (
