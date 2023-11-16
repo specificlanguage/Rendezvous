@@ -18,8 +18,8 @@ It's using Typescript, React, ChakraUI, Zustand (a simple version of Redux), Duf
 
 ### Todos:
 
-- [ ] Login/Trip creation
-- [ ] Display users from backend
+- [x] Login/Trip creation
+- [x] Display users from backend
 - [ ] Create an import page to search flights
     - [x] Show flights
     - [ ] Correctly show the times for each time zone (it's only doing the local time zone to the user right now, which isn't good)
